@@ -30,8 +30,10 @@ const createWindow = () => {
 
   const isDev = (args?.APP_DEV || '') == "true";
   if (isDev) {
+    mainWindow.webContents.openDevTools();
     mainWindow.loadURL('http://localhost:4200');
   } else {
+    mainWindow.setMenu(null);
     mainWindow.loadURL(
       url.format({
         pathname: path.join(__dirname, `/dist/${packageJson.name}/browser/index.html`),
@@ -40,9 +42,6 @@ const createWindow = () => {
       })
     );
   }
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', () => {
     mainWindow = null;
