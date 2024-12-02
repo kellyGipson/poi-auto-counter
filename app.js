@@ -1,6 +1,6 @@
 'use strict';
 
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const url = require("url");
 const path = require("path");
 const packageJson = require("./package.json");
@@ -20,16 +20,20 @@ const args = process.argv
 let mainWindow;
 
 const createWindow = () => {
+  const isDev = (args?.APP_DEV || '') == "true";
+  const DEV_TOOLS_DEFAULT_WIDTH = 446;
+
   mainWindow = new BrowserWindow({
-    width: 800,
+    width: 800 + (isDev ? DEV_TOOLS_DEFAULT_WIDTH : 0),
     height: 600,
     webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
     },
   });
 
-  const isDev = (args?.APP_DEV || '') == "true";
   if (isDev) {
+    mainWindow.width = mainWindow.width + DEV_TOOLS_DEFAULT_WIDTH;
     mainWindow.webContents.openDevTools();
     mainWindow.loadURL('http://localhost:4200');
   } else {
@@ -48,7 +52,11 @@ const createWindow = () => {
   });
 }
 
-app.on('ready', createWindow);
+app.whenReady().then(() => {
+	ipcMain.handle('get-version', () => app.getVersion());
+
+	createWindow();
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
