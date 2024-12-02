@@ -1,9 +1,12 @@
-import { Component, HostListener } from "@angular/core";
-import { MatButtonModule } from "@angular/material/button";
+import { Component, HostListener } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { CounterHintComponent } from './hint/hint.component';
 
 @Component({
 	selector: 'counter',
 	template: `
+		<counter-hint class="absolute top-8 left-8"></counter-hint>
+
 		<div class="h-full w-full flex justify-center items-center">
 			<div
 				class="w-min gap-8 flex flex-col"
@@ -26,7 +29,7 @@ import { MatButtonModule } from "@angular/material/button";
 			</div>
 		</div>
 	`,
-	imports: [MatButtonModule],
+	imports: [MatButtonModule, CounterHintComponent],
 	styleUrl: './counter.component.scss',
 })
 export class CounterComponent {
