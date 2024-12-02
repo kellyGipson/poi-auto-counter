@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 
 declare global {
   interface Window {
@@ -16,8 +16,14 @@ declare global {
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'poi-auto-counter';
 
 	versionPromise = window.electronAPI.getVersion();
+
+	constructor(private router: Router) {}
+	
+	ngOnInit(): void {
+		this.router.navigate(['/counter']);
+	}
 }

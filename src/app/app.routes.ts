@@ -3,11 +3,11 @@ import { CounterComponent } from './counter/counter.component';
 
 export const routes: Routes = [
 	{
-		path: '**',
-		redirectTo: 'counter'
-	},
-	{
 		path: 'counter',
 		component: CounterComponent,
+	},
+	{
+		path: '**',
+		redirectTo: 'counter'
 	},
 ];
