@@ -21,7 +21,7 @@ import { MatButtonModule } from "@angular/material/button";
 				<div class="counter-buttons">
 					<button class="btn dec" (click)="decrement()">-</button>
 
-					<button class="btn inc" (click)="increment()" (mousedown)="preIncrement()">+</button>
+					<button class="btn inc" (click)="increment()">+</button>
 				</div>
 			</div>
 		</div>
@@ -34,7 +34,7 @@ export class CounterComponent {
 	step = 1;
 	isIncrementing = false;
 
-	@HostListener('window:keyup.0')
+	@HostListener('window:keydown.0')
 	decrement() {
 		if (this.count - this.step < 0) {
 			this.count = 0;
@@ -43,16 +43,14 @@ export class CounterComponent {
 		this.count -= this.step;
 	}
 
-	@HostListener('window:keyup.enter')
-	@HostListener('window:keyup.space')
-	increment() {
-		this.count += this.step;
-		this.isIncrementing = false;
-	}
-
 	@HostListener('window:keydown.enter')
 	@HostListener('window:keydown.space')
-	preIncrement() {
+	increment() {
 		this.isIncrementing = true;
+
+		setTimeout(() => {
+			this.count += this.step;
+			this.isIncrementing = false;
+		}, 50);
 	}
 }
