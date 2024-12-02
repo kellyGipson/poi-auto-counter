@@ -1,7 +1,11 @@
 import { Component, HostListener } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { CounterHintComponent } from './hint/hint.component';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
+@UntilDestroy()
 @Component({
 	selector: 'counter',
 	template: `
@@ -12,13 +16,18 @@ import { CounterHintComponent } from './hint/hint.component';
 				class="w-min gap-8 flex flex-col"
 				[class.translate-y-[-6px]]="isIncrementing"
 			>
-				<div class="w-full flex justify-center">
+				<div class="w-full flex flex-col justify-center items-center gap-8">
 					<div
 						[class.text-6xl]="!isIncrementing"
 						[class.text-7xl]="isIncrementing"
 						[class.scale-100]="isIncrementing"
 						[class.translate-y-[2px]]="isIncrementing"
 					>{{count}}</div>
+
+					<div class="flex items-center gap-4">
+						<span class="shrink-0">Counter Steps:</span>
+						<input class="bg-transparent border rounded-md w-16 px-2" type="number" [formControl]="stepFormControl" min="1"/>
+					</div>
 				</div>
 
 				<div class="counter-buttons">
@@ -29,13 +38,17 @@ import { CounterHintComponent } from './hint/hint.component';
 			</div>
 		</div>
 	`,
-	imports: [MatButtonModule, CounterHintComponent],
+	imports: [ MatButtonModule, MatInputModule, CounterHintComponent, ReactiveFormsModule ],
 	styleUrl: './counter.component.scss',
 })
 export class CounterComponent {
 	count = 0;
-	step = 1;
 	isIncrementing = false;
+	stepFormControl = new FormControl<number>(1, Validators.min(1));
+
+	get step(): number {
+		return this.stepFormControl?.value || 0;
+	}
 
 	@HostListener('window:keydown.0')
 	decrement() {
