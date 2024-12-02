@@ -4,7 +4,7 @@
   "main": "app.js",
   "scripts": {
     "ng": "ng",
-    "start": "concurrently \"ng serve --live-reload\" \"electron . APP_DEV=true\"",
+    "start": "concurrently \"ng serve --live-reload\" \"electron . APP_DEV=true\" --kill-others",
     "start-angular": "ng serve",
     "build": "ng build --base-href ./ && electron .",
     "watch": "ng build --watch --configuration development",
