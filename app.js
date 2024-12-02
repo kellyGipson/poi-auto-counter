@@ -4,6 +4,7 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const url = require("url");
 const path = require("path");
 const packageJson = require("./package.json");
+const { IpcChannels } = require('./ipc-channels');
 
 // start process argv
 
@@ -53,7 +54,7 @@ const createWindow = () => {
 }
 
 app.whenReady().then(() => {
-	ipcMain.handle('get-version', () => app.getVersion());
+	ipcMain.handle(IpcChannels.getVersion, () => app.getVersion());
 
 	createWindow();
 });

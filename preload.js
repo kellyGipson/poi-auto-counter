@@ -1,5 +1,10 @@
 const { contextBridge, ipcRenderer } = require('electron');
+const { IpcChannels } = require('./ipc-channels');
 
-contextBridge.exposeInMainWorld('electronAPI', {
-  getVersion: () => ipcRenderer.invoke('get-version'),
-});
+const ipcExposedProps = {};
+
+for (const [key, value] of Object.entries(IpcChannels)) {
+	ipcExposedProps[key] = () => ipcRenderer.invoke(value);
+}
+
+contextBridge.exposeInMainWorld('electronAPI', ipcExposedProps);
