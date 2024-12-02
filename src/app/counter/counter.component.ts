@@ -21,7 +21,7 @@ import { MatButtonModule } from "@angular/material/button";
 				<div class="counter-buttons">
 					<button class="btn dec" (click)="decrement()">-</button>
 
-					<button class="btn inc" (click)="increment()">+</button>
+					<button class="btn inc" (click)="increment()" (mousedown)="preIncrement()">+</button>
 				</div>
 			</div>
 		</div>
