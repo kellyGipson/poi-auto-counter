@@ -36,6 +36,10 @@ export class CounterComponent {
 
 	@HostListener('window:keyup.0')
 	decrement() {
+		if (this.count - this.step < 0) {
+			this.count = 0;
+			return;
+		}
 		this.count -= this.step;
 	}
 
