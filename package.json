@@ -7,6 +7,7 @@
     "start": "concurrently \"ng serve --live-reload\" \"electron . APP_DEV=true\" --kill-others",
     "start-angular": "ng serve",
     "build": "ng build --base-href ./ && electron .",
+		"package-win64": "npx @electron/packager . --platform=win32 --arch=x64 --overwrite",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
