@@ -1,2 +1,13 @@
 <router-outlet/>
 <span class="absolute bottom-0 right-0 mr-2">v{{ versionPromise | async }}</span>
+
+<div class="absolute bottom-0 left-0">
+	<img *ngIf="screenshot" [src]="screenshot">
+	
+	<mat-select [formControl]="displayFormControl">
+		@for (display of displayList; track display.id; let idx = $index) {
+			<mat-option [value]="display.id">Display {{ idx + 1 }} ({{ display.width }}x{{ display.height }})</mat-option>
+		}
+	</mat-select>
+	<button (click)="onClick()">get screenshot</button>
+</div>
