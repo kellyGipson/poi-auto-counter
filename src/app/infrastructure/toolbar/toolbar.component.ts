@@ -20,6 +20,14 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 			routerLink="/counter"
 			routerLinkActive="active"
 		>Counter</toolbar-item>
+
+		<toolbar-item
+			[isHovering]="isCounterHovering"
+			(mouseenter)="isCounterHovering = true"
+			(mouseleave)="isCounterHovering = false"
+			routerLink="/auto-counter"
+			routerLinkActive="active"
+		>Auto Counter</toolbar-item>
 	`,
 	imports: [
 		ToolbarItemComponent,

@@ -1,10 +1,11 @@
 import { Routes } from '@angular/router';
 import { CounterComponent } from './counter/counter.component';
 import { HomeComponent } from './home/home.component';
+import { AutoCounterComponent } from './auto-counter/auto-counter.component';
 
 export const routes: Routes = [
 	{
-		path: '',
+		path: 'home',
 		component: HomeComponent,
 	},
 	{
@@ -12,7 +13,11 @@ export const routes: Routes = [
 		component: CounterComponent,
 	},
 	{
+		path: 'auto-counter',
+		component: AutoCounterComponent,
+	},
+	{
 		path: '**',
-		redirectTo: ''
+		redirectTo: 'home'
 	},
 ];
