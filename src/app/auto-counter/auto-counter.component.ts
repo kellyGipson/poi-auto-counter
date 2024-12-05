@@ -4,7 +4,9 @@ import { ScreenSelectorComponent } from './screen-selector/screen-selector.compo
 @Component({
 	selector: 'auto-counter',
 	template: `
-		<screen-selector></screen-selector>
+		<div>
+			<screen-selector></screen-selector>
+		</div>
 	`,
 	imports: [
 		ScreenSelectorComponent,

@@ -22,9 +22,9 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 		>Counter</toolbar-item>
 
 		<toolbar-item
-			[isHovering]="isCounterHovering"
-			(mouseenter)="isCounterHovering = true"
-			(mouseleave)="isCounterHovering = false"
+			[isHovering]="isAutoCounterHovering"
+			(mouseenter)="isAutoCounterHovering = true"
+			(mouseleave)="isAutoCounterHovering = false"
 			routerLink="/auto-counter"
 			routerLinkActive="active"
 		>Auto Counter</toolbar-item>
@@ -38,4 +38,5 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 export class ToolbarComponent {
 	isHomeHovering = false;
 	isCounterHovering = false;
+	isAutoCounterHovering = false;
 }
