@@ -5,7 +5,7 @@ const url = require("url");
 const path = require("path");
 const packageJson = require("./package.json");
 const { IpcChannels } = require('./ipc-channels');
-const screenshot = require('screenshot-desktop');
+const { handleScreenshotChannels } = require('./screenshots');
 
 // start process argv
 
@@ -56,8 +56,7 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
 	ipcMain.handle(IpcChannels.getVersion, () => app.getVersion());
-	ipcMain.handle(IpcChannels.listDisplays, () => screenshot.listDisplays());
-	ipcMain.handle(IpcChannels.screenshot, (e, ...args) => screenshot(args));
+	handleScreenshotChannels();
 
 	createWindow();
 });
