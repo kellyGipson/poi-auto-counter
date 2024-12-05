@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { MatButtonModule } from '@angular/material/button';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { InfoBoxComponent } from '../../shared/info-box/info-box.component';
 
 @Component({
-	selector: 'counter-hint',
+	selector: 'pac-counter-help',
 	template: `
 		<button
 			type="button"
@@ -33,9 +32,9 @@ import { InfoBoxComponent } from '../../shared/info-box/info-box.component';
 		</ng-template>
 	`,
 	imports: [FontAwesomeModule, OverlayModule, InfoBoxComponent],
-	styleUrl: './hint.component.scss',
+	styleUrl: './help.component.scss',
 })
-export class CounterHintComponent {
+export class PacHelpComponent {
   isOpen = false;
 	faCircleInfo = faCircleInfo;
 }

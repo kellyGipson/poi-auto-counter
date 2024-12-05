@@ -5,6 +5,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { Display, ScreenshotOptions } from './screenshot-desktop-types';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { PacHelpComponent } from './infrastructure/help/help.component';
 
 declare global {
   interface Window {
@@ -23,6 +24,7 @@ declare global {
 		CommonModule,
 		MatSelectModule,
 		ReactiveFormsModule,
+		PacHelpComponent,
 	],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

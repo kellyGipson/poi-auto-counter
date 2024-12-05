@@ -2,15 +2,12 @@ import { Component, HostListener } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { CounterHintComponent } from './hint/hint.component';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @UntilDestroy()
 @Component({
 	selector: 'counter',
 	template: `
-		<counter-hint class="absolute top-8 left-8"></counter-hint>
-
 		<div class="h-full w-full flex justify-center items-center">
 			<div
 				class="w-min gap-8 flex flex-col"
@@ -38,7 +35,7 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 			</div>
 		</div>
 	`,
-	imports: [ MatButtonModule, MatInputModule, CounterHintComponent, ReactiveFormsModule ],
+	imports: [ MatButtonModule, MatInputModule, ReactiveFormsModule ],
 	styleUrl: './counter.component.scss',
 })
 export class CounterComponent {
