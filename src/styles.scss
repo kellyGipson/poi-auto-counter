@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-$background-one: #1c1a1c;
+$background-one: #2a252a;
 
 html, body {
 	color: #eedee7;
@@ -10,4 +10,5 @@ html, body {
   margin: 0;
 	height: 100%;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+	overflow: hidden;
 }

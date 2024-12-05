@@ -6,6 +6,9 @@ import { Display, ScreenshotOptions } from './screenshot-desktop-types';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { PacHelpComponent } from './infrastructure/help/help.component';
+import { ToolbarTriggerComponent } from './infrastructure/toolbar/toolbar-trigger.component';
+import { ToolbarService } from './infrastructure/toolbar/toolbar.service';
+import { ToolbarComponent } from './infrastructure/toolbar/toolbar.component';
 
 declare global {
   interface Window {
@@ -25,6 +28,8 @@ declare global {
 		MatSelectModule,
 		ReactiveFormsModule,
 		PacHelpComponent,
+		ToolbarComponent,
+		ToolbarTriggerComponent,
 	],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -38,7 +43,11 @@ export class AppComponent implements OnInit {
 
 	displayFormControl = new FormControl<string>('');
 
-	constructor(private router: Router, private domSanitizer: DomSanitizer) {}
+	constructor(
+		private router: Router,
+		private domSanitizer: DomSanitizer,
+		public toolbarService: ToolbarService,
+	) {}
 
 	async ngOnInit(): Promise<void> {
 		this.router.navigate(['/counter']);
@@ -54,7 +63,6 @@ export class AppComponent implements OnInit {
 		if (this.displayList.length > 0) {
 			this.displayFormControl.setValue(this.displayList[0].id);
 		}
-		console.log(this.displayList);
 	}
 
 	onClick(): void {

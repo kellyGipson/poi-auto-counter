@@ -1,7 +1,20 @@
-<router-outlet/>
+<div
+	class="flex flex-row translate-x-[-300px] transition-all duration-300"
+	[class.!translate-x-[0px]]="toolbarService.isToolbarOpen()"
+>
+	<div class="shrink-0 w-[300px]">
+		<toolbar></toolbar>
+	</div>
+	
+	<div class="relative shrink-0 bg-[#1c1a1c] h-screen w-screen">
+		<router-outlet/>
+	
+		<toolbar-trigger class="absolute top-0 left-0 p-4"></toolbar-trigger>
+	</div>
+</div>
 
-
-
+<pac-counter-help class="absolute bottom-8 right-8"></pac-counter-help>
+<span class="absolute bottom-0 right-0 mr-2">v{{ versionPromise | async }}</span>
 
 <!-- TODO: move to rightful home -->
 <div class="absolute bottom-0 left-0">
@@ -15,8 +28,3 @@
 	<button (click)="onClick()">get screenshot</button>
 </div>
 <!-- TODO: move to rightful home -->
-
-
-
-<pac-counter-help class="absolute bottom-8 right-8"></pac-counter-help>
-<span class="absolute bottom-0 right-0 mr-2">v{{ versionPromise | async }}</span>
