@@ -3,5 +3,6 @@ module.exports = {
 		getVersion: 'get-version',
 		listDisplays: 'list-displays',
 		screenshot: 'screenshot',
+		getPollObject: 'get-poll-object',
 	}
 };

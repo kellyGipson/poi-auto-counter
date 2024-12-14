@@ -56,6 +56,11 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
 	ipcMain.handle(IpcChannels.getVersion, () => app.getVersion());
+	ipcMain.handle(IpcChannels.getPollObject, () => {
+		return {
+			logs: Logger.logs,
+		};
+	});
 	handleScreenshotChannels();
 
 	createWindow();
