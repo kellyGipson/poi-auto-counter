@@ -5,7 +5,7 @@ import { electronApi } from "../electron/electron-api";
 import { Poll } from "./poll";
 
 @UntilDestroy()
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PollService {
 	pollSubject = new BehaviorSubject<Poll | null>(null);
 
@@ -20,17 +20,6 @@ export class PollService {
 			tap((poll) => {
 				this.pollSubject.next(poll);
 			}),
-		);
-	}
-
-	stopPolling(): void {}
-	
-	getPoll$(): Observable<Poll> {
-		return interval(300).pipe(
-			untilDestroyed(this),
-			mergeMap(() =>
-				from(electronApi.getPollObject())
-			),
-		);
+		).subscribe();
 	}
 }
