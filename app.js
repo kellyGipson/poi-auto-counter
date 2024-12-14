@@ -61,6 +61,12 @@ app.whenReady().then(() => {
 			logs: Logger.logs,
 		};
 	});
+	ipcMain.handle(IpcChannels.removeAllLogs, () => {
+		Logger.removeAllLogs();
+	});
+	ipcMain.handle(IpcChannels.removeLog, (e, logId) => {
+		Logger.removeLog(logId);
+	});
 	handleScreenshotChannels();
 
 	createWindow();

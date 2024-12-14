@@ -4,5 +4,7 @@ module.exports = {
 		listDisplays: 'list-displays',
 		screenshot: 'screenshot',
 		getPollObject: 'get-poll-object',
+		removeAllLogs: 'remove-all-logs',
+		removeLog: 'remove-log',
 	}
 };

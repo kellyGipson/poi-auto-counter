@@ -8,6 +8,7 @@ import { PacHelpComponent } from './infrastructure/help/help.component';
 import { ToolbarTriggerComponent } from './infrastructure/toolbar/toolbar-trigger.component';
 import { ToolbarService } from './infrastructure/toolbar/toolbar.service';
 import { ToolbarComponent } from './infrastructure/toolbar/toolbar.component';
+import { LogTrayComponent } from './logging/log-tray.component';
 import { Poll } from './poll/poll';
 import { PollService } from './poll/poll.service';
 import { electronApi } from './electron/electron-api';
@@ -19,6 +20,8 @@ declare global {
       listDisplays: () => Promise<Display[]>;
       screenshot: (options: ScreenshotOptions) => Promise<number[]>;
       getPollObject: () => Promise<Poll>;
+      removeAllLogs: () => Promise<void>;
+      removeLog: (logId: string) => Promise<string>;// returns the removed id or -1 if not found
     }
   }
 }
@@ -33,6 +36,7 @@ declare global {
 		PacHelpComponent,
 		ToolbarComponent,
 		ToolbarTriggerComponent,
+		LogTrayComponent,
 	],
 	providers: [
 		PollService,

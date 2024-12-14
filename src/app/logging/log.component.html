@@ -1,0 +1,38 @@
+<div
+	class="log relative font-size-4 flex flex-col"
+	[class.log--info]="log?.type === logType.info"
+	[class.log--warn]="log?.type === logType.warn"
+	[class.log--error]="log?.type === logType.error"
+	[class.log--debug]="log?.type === logType.debug"
+>
+	<span class="text-lg border-b">{{ log?.title || '' }}</span>
+
+	<span>{{ log?.message || '' }}</span>
+
+	<div class="flex items-start">
+		<button [class.rotate-90]="isExpanded" class="mr-2 w-4 shrink-0 transition-all" (click)="isExpanded = !isExpanded">
+			<fa-icon [icon]="expandIcon"></fa-icon>
+		</button>
+
+		<div>
+			<span *ngIf="!isExpanded">Expand for help</span>
+
+			<div *ngIf="isExpanded">
+				<pre [innerHTML]="sanitizedLogDetails" class="min-h-[24px]"></pre>
+
+				<div class="text-nowrap flex gap-2">
+					<span class="log__copy-message px-2 rounded-md w-min">Copy and send to &#64;PoiPKMN on discord or x(twitter)</span>
+					
+					<button (click)="onCopy()"><fa-icon [icon]="copyIcon"></fa-icon></button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<button
+		class="absolute top-0 right-0 hover:bg-red-900 active:bg-[#6d1a1a] w-6 rounded-full transition-all"
+		(click)="electronApi.removeLog(log?.id || '')"
+	>
+		<fa-icon [icon]="closeIcon"></fa-icon>
+	</button>
+</div>

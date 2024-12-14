@@ -1,0 +1,29 @@
+$logOpacity: 0.6;
+$error: hsla(0, 59%, 30%, $logOpacity);
+$warn: hsla(60, 42%, 38%, $logOpacity);
+$info: hsla(228, 57%, 55%, $logOpacity);
+$debug: hsla(162, 48%, 32%, $logOpacity);
+
+.log {
+	border-radius: 3px;
+	padding-block: 4px;
+	padding-inline: 16px;
+	box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.46);
+
+	&--error { background-color: $error; }
+	&--warn { background-color: $warn; }
+	&--info { background-color: $info; }
+	&--debug { background-color: $debug; }
+
+	&__copy-message {
+		background-color: hsla(0, 0%, 0%, 0.25);
+	}
+}
+
+pre {
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	word-wrap: break-word;
+}
