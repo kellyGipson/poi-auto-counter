@@ -8,10 +8,11 @@ import { PacHelpComponent } from './infrastructure/help/help.component';
 import { ToolbarTriggerComponent } from './infrastructure/toolbar/toolbar-trigger.component';
 import { ToolbarService } from './infrastructure/toolbar/toolbar.service';
 import { ToolbarComponent } from './infrastructure/toolbar/toolbar.component';
+import { electronApi } from './electron/electron-api';
 
 declare global {
   interface Window {
-    electronAPI: {
+    electronAPI: { // use import "electronApi" from "src/app/electron/electron-api"
       getVersion: () => Promise<string>;
       listDisplays: () => Promise<Display[]>;
       screenshot: (options: ScreenshotOptions) => Promise<number[]>;
@@ -35,7 +36,7 @@ declare global {
 })
 export class AppComponent implements OnInit {
   title = 'poi-auto-counter';
-	versionPromise = window.electronAPI.getVersion();
+	versionPromise = electronApi.getVersion();
 
 	constructor(
 		private router: Router,

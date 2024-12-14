@@ -5,6 +5,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Display } from '../../screenshot-desktop-types';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { electronApi } from '../../electron/electron-api';
 
 @Component({
 	selector: 'screen-selector',
@@ -36,7 +37,7 @@ export class ScreenSelectorComponent {
 	constructor(private domSanitizer: DomSanitizer) {}
 
 	async ngOnInit(): Promise<void> {
-		const displayList = await window.electronAPI.listDisplays();
+		const displayList = await electronApi.listDisplays();
 
 		displayList.sort((a, b) => {
 			const aIdNum = +(a.id.at(a.id.length - 1) || '0');
@@ -52,7 +53,7 @@ export class ScreenSelectorComponent {
 
 	onClick(): void {
 		if (this.displayFormControl.value) {
-			window.electronAPI.screenshot({ format: 'png', screen: this.displayFormControl.value })
+			electronApi.screenshot({ format: 'png', screen: this.displayFormControl.value })
 				.then((buffer) => {
 					this.screenshot = this.convertBufferToImage(buffer);
 				});
