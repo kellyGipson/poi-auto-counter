@@ -48,11 +48,12 @@ class AppDataFile extends File {
 
 	jsObjToB64(jsObj) {
 		const json = JSON.stringify(jsObj);
-		return atob(json);
+		console.log(json)
+		return btoa(json);
 	}
 
 	b64ToJsObj(b64) {
-		const json = btoa(b64);
+		const json = atob(b64);
 		return JSON.parse(json);
 	}
 }
