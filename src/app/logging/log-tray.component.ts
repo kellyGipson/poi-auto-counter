@@ -17,7 +17,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 
 			<button
 				*ngIf="logs.length || 0 > 0"
-				class="error log--error hover:bg-red-800 active:bg-red-900"
+				class="error log log--error hover:bg-red-800 active:bg-red-900"
 				(click)="electronApi.removeAllLogs()"
 			>Close All</button>
 		</div>
