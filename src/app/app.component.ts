@@ -12,6 +12,7 @@ import { LogTrayComponent } from './logging/log-tray.component';
 import { Poll } from './poll/poll';
 import { PollService } from './poll/poll.service';
 import { electronApi } from './electron/electron-api';
+import { Hunt } from './hunts/hunt';
 
 declare global {
   interface Window {
@@ -21,7 +22,8 @@ declare global {
       screenshot: (options: ScreenshotOptions) => Promise<number[]>;
       getPollObject: () => Promise<Poll>;
       removeAllLogs: () => Promise<void>;
-      removeLog: (logId: string) => Promise<string>;// returns the removed id or -1 if not found
+      removeLog: (logId: string) => Promise<void>;
+      addHunt: (hunt: Hunt) => Promise<Hunt>;// returns the newly created hunt
     }
   }
 }

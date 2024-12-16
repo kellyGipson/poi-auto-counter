@@ -6,5 +6,6 @@ module.exports = {
 		getPollObject: 'get-poll-object',
 		removeAllLogs: 'remove-all-logs',
 		removeLog: 'remove-log',
+		addHunt: 'add-hunt',
 	}
 };
