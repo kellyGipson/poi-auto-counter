@@ -11,23 +11,32 @@ import { MatButtonModule } from "@angular/material/button";
 	selector: 'counter-form',
 	template: `
 		<div class="flex flex-col">
-			<mat-form-field>
-				<input matInput type="number" placeholder="Count" min="0" [formControl]="counter.controls.count">
+			<mat-form-field [appearance]="'fill'">
+				<mat-label>Count</mat-label>
+				<input matInput type="number" min="0" [formControl]="counter.controls.count">
 			</mat-form-field>
 
-			<mat-form-field>
-				<input matInput type="number" placeholder="Interval" min="1" [formControl]="counter.controls.interval">
+			<mat-form-field [appearance]="'fill'">
+				<mat-label>Interval</mat-label>
+				<input matInput type="number" min="1" [formControl]="counter.controls.interval">
 			</mat-form-field>
 
-			<mat-form-field>
-				<input matInput type="text" placeholder="Method" [formControl]="counter.controls.method">
+			<mat-form-field [appearance]="'fill'">
+				<mat-label>Method</mat-label>
+				<input matInput type="text" [formControl]="counter.controls.method">
 			</mat-form-field>
 		</div>
 		
 		<div class="flex flex-col">
 			@for (game of counter.controls.games.controls; track $index) {
-				<mat-form-field>
-					<input matInput type="text" placeholder="Version" [formControl]="game.controls.version">
+				<mat-form-field [appearance]="'fill'">
+					<mat-label>Version</mat-label>
+					<input matInput type="text" [formControl]="game.controls.version">
+				</mat-form-field>
+
+				<mat-form-field [appearance]="'fill'">
+					<mat-label>Location</mat-label>
+					<input matInput type="text" [formControl]="game.controls.location">
 				</mat-form-field>
 
 				<div class="flex justify-between">
@@ -36,7 +45,7 @@ import { MatButtonModule } from "@angular/material/button";
 						<mat-checkbox [formControl]="game.controls.found">Found</mat-checkbox>
 					</div>
 
-					<button mat-raised-button>Add Hunt</button>
+					<ng-content select="[addHuntButton]"></ng-content>
 				</div>
 			}
 		</div>
@@ -46,7 +55,6 @@ import { MatButtonModule } from "@angular/material/button";
 		MatInputModule,
 		ReactiveFormsModule,
 		MatCheckboxModule,
-		MatButtonModule,
 		CommonModule,
 	],
 })

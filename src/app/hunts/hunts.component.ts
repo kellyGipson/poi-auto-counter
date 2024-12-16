@@ -5,7 +5,7 @@ import { PollService } from '../poll/poll.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { map, tap } from 'rxjs';
 import { Method } from './hunting-method';
-import { HuntGame } from './hunt-game';
+import { Game } from './hunt-game';
 import { Version } from './game-version';
 import { Hunt } from './hunt';
 import { HuntFormComponent } from './new-hunt/new-hunt-form.component';
@@ -17,8 +17,16 @@ import { HuntFormComponent } from './new-hunt/new-hunt-form.component';
 		<div class="flex flex-col">
 			<button (click)="onAdd()">New Hunt</button>
 
-			<div class="my-8">
-				<hunt-form></hunt-form>
+			<div
+			>
+				<hunt-form [formGroup]="formGroup">
+					<button
+						addHuntButton
+						mat-raised-button
+						[disabled]="!formGroup.valid"
+						(click)="onAdd()"
+					>Add Hunt</button>
+				</hunt-form>
 			</div>
 		
 			@for (hunt of hunts; track hunt.id) {
