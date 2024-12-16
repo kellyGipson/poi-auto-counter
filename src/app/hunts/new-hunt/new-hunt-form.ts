@@ -14,6 +14,7 @@ export type CounterForm = FormGroup<{
 
 export type GamesForm = FormGroup<{
 	version: FormControl<string>;
+	location: FormControl<string>;
 	caught: FormControl<boolean>;
 	found: FormControl<boolean>;
 }>;

@@ -8,14 +8,17 @@ import { HuntForm } from "./new-hunt-form";
 @Component({
 	selector: 'hunt-form',
 	template: `
-		<div class="flex flex-col h-[500px] w-full bg-neutral-800 rounded-lg shadow-xl p-8">
-			<mat-form-field>
-				<input matInput type="text" placeholder="Pokemon Species" [formControl]="formGroup.controls.species">
+		<div class="flex flex-col w-full bg-neutral-800 rounded-lg shadow-xl p-8">
+			<mat-form-field [appearance]="'fill'">
+			<mat-label>Pokemon Species</mat-label>
+				<input matInput type="text" [formControl]="formGroup.controls.species">
 			</mat-form-field>
 
 			<div class="flex flex-col">
 				@for (counter of formGroup.controls.counters.controls; track $index) {
-					<counter-form [counter]="counter"></counter-form>
+					<counter-form [counter]="counter">
+						<ng-content select="[addHuntButton]" addHuntButton></ng-content>
+					</counter-form>
 				}
 			</div>
 		</div>
