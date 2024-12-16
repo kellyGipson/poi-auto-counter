@@ -5,11 +5,6 @@ $info: hsla(228, 57%, 55%, $logOpacity);
 $debug: hsla(162, 48%, 32%, $logOpacity);
 
 .log {
-	border-radius: 3px;
-	padding-block: 4px;
-	padding-inline: 16px;
-	box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.46);
-
 	&--error { background-color: $error; }
 	&--warn { background-color: $warn; }
 	&--info { background-color: $info; }
