@@ -31,8 +31,9 @@ class AppDataFile extends File {
 	}
 
 	write(dataToWrite/* js object */) {
-		this.writeFileSync(`${this.url}.bak`, this.jsObjToB64(dataToWrite));
-		this.writeFileSync(this.url, this.jsObjToB64(dataToWrite));
+		const b64 = this.jsObjToB64(dataToWrite);
+		this.writeFileSync(`${this.url}.bak`, b64);
+		this.writeFileSync(this.url, b64);
 		this.backupContents = dataToWrite;
 		this.contents = dataToWrite;
 	}
