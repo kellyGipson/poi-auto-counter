@@ -9,15 +9,22 @@ import { Game } from './hunt-game';
 import { Version } from './game-version';
 import { Hunt } from './hunt';
 import { HuntFormComponent } from './new-hunt/new-hunt-form.component';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { HuntForm } from './new-hunt/new-hunt-form';
 
 @UntilDestroy()
 @Component({
 	selector: 'hunts',
 	template: `
 		<div class="flex flex-col">
-			<button (click)="onAdd()">New Hunt</button>
+			<button mat-raised-button (click)="onNewHunt()">New Hunt</button>
 
 			<div
+				class="my-8 scale-y-0 transition-all"
+				[class.scale-y-100]="isNewHuntVisible"
+				[class.translate-y-[-50%]]="!isNewHuntVisible"
 			>
 				<hunt-form [formGroup]="formGroup">
 					<button
@@ -37,11 +44,30 @@ import { HuntFormComponent } from './new-hunt/new-hunt-form.component';
 		</div>
 	`,
 	providers: [PollService],
-	imports: [HuntFormComponent],
+	imports: [HuntFormComponent, CommonModule, MatButtonModule],
 })
 export class HuntsComponent implements OnInit {
 	hunts: Hunt[] = [];
-	
+	isNewHuntVisible = false;
+	formGroup = new FormGroup({
+		species: new FormControl<string>('', [Validators.required]),
+		counters: new FormArray([
+			new FormGroup({
+				count: new FormControl<number>(0, [Validators.required]),
+				interval: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
+				method: new FormControl<string>('', [Validators.required]),
+				games: new FormArray([
+					new FormGroup({
+						version: new FormControl<string>('', [Validators.required]),
+						location: new FormControl<string>('', [Validators.required]),
+						caught: new FormControl<boolean>(false, [Validators.required]),
+						found: new FormControl<boolean>(false, [Validators.required]),
+					}),
+				]),
+			}),
+		]),
+	}) as HuntForm;
+
 	constructor(private pollService: PollService) {}
 	
 	ngOnInit(): void {
@@ -54,12 +80,27 @@ export class HuntsComponent implements OnInit {
 		).subscribe();
 	}
 
+	onNewHunt(): void {
+		this.isNewHuntVisible = !this.isNewHuntVisible;
+	}
+
 	onAdd(): void {
-		electronApi.addHunt(
-			new Hunt(
-				'Rayquaza',
-				[ new Counter(0, 1, Method.fullOdds, [new HuntGame(Version.black, false, false)]) ]
+		const { species, counters } = this.formGroup.value;
+		const ctrs = (counters || []).map((c) =>
+			new Counter(
+				c.count || 0, // TODO ABSTRACT ALL OF THIS FOR THE LOVE OF GOD
+				c.interval || 1,
+				c.method || Method.fullOdds,
+				(c.games || []).map((g) =>
+					new Game(
+						g.version || Version.colosseum,
+						g.location || 'Realgam Tower',
+						g.caught || false,
+						g.found || false,
+					)
+				)
 			)
-		);
+		)
+		electronApi.addHunt(new Hunt(species || 'Metagross', ctrs));
 	}
 }

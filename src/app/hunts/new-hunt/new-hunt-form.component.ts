@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { Component, Input } from "@angular/core";
+import { ReactiveFormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { CounterFormComponent } from "../counter-form.component";
@@ -28,25 +28,5 @@ import { HuntForm } from "./new-hunt-form";
 	]
 })
 export class HuntFormComponent {
-	formGroup: HuntForm;
-
-	constructor() {
-		this.formGroup = new FormGroup({
-			species: new FormControl<string>('', [Validators.required]),
-			counters: new FormArray([
-				new FormGroup({
-					count: new FormControl<number>(0),
-					interval: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
-					method: new FormControl<string>(''),
-					games: new FormArray([
-						new FormGroup({
-							version: new FormControl<string>(''),
-							caught: new FormControl<boolean>(false),
-							found: new FormControl<boolean>(false),
-						}),
-					]),
-				}),
-			]),
-		}) as HuntForm;
-	}
+	@Input() formGroup!: HuntForm;
 }
