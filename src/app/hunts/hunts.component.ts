@@ -8,6 +8,7 @@ import { Method } from './hunting-method';
 import { HuntGame } from './hunt-game';
 import { Version } from './game-version';
 import { Hunt } from './hunt';
+import { HuntFormComponent } from './new-hunt/new-hunt-form.component';
 
 @UntilDestroy()
 @Component({
@@ -15,6 +16,10 @@ import { Hunt } from './hunt';
 	template: `
 		<div class="flex flex-col">
 			<button (click)="onAdd()">New Hunt</button>
+
+			<div class="my-8">
+				<hunt-form></hunt-form>
+			</div>
 		
 			@for (hunt of hunts; track hunt.id) {
 				{{ hunt.id }}
@@ -24,6 +29,7 @@ import { Hunt } from './hunt';
 		</div>
 	`,
 	providers: [PollService],
+	imports: [HuntFormComponent],
 })
 export class HuntsComponent implements OnInit {
 	hunts: Hunt[] = [];
