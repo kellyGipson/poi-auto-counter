@@ -6,19 +6,9 @@ const path = require("path");
 const packageJson = require("./package.json");
 const { IpcChannels } = require('./ipc-channels');
 const { handleScreenshotChannels } = require('./screenshots');
-
-// start process argv
-
-const args = process.argv
-  .map((arg) => arg.split('='))
-  .reduce((result, item) => {
-    const [ key, value ] = item;
-    result[key] = value;
-    return result;
-  });
-
-// end process argv
-
+const { Logger } = require('./electron/logging/logger');
+const { processArgv } = require('./electron/core/process-argv');
+const args = processArgv(process.argv);
 let mainWindow;
 
 const createWindow = () => {
