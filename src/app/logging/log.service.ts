@@ -12,7 +12,7 @@ export class LogService {
 	getLogs$(): Observable<Log[]> {
 		return this.pollService.poll$().pipe(
 			untilDestroyed(this),
-			map((poll) => poll.logs),
+			map((poll) => poll?.logs || []),
 		);
 	}
 }

@@ -5,8 +5,8 @@ const { randomUUID } = require('crypto');
 class Logger {
 	static logs = [];
 
-	static buildLog(message, logType, details) {
-		return { id: randomUUID({ }), message: message, type: logType, title: 'Main Process', details: details };
+	static buildLog(message, logType, details, title = 'Main Process') {
+		return { id: randomUUID({ }), message: message, type: logType, title, details: details };
 	}
 
 	/**

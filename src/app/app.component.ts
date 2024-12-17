@@ -24,6 +24,7 @@ declare global {
       removeAllLogs: () => Promise<void>;
       removeLog: (logId: string) => Promise<void>;
       addHunt: (hunt: Hunt) => Promise<Hunt>;// returns the newly created hunt
+      openHuntsFolder: () => Promise<void>;
     }
   }
 }
@@ -39,9 +40,6 @@ declare global {
 		ToolbarComponent,
 		ToolbarTriggerComponent,
 		LogTrayComponent,
-	],
-	providers: [
-		PollService,
 	],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

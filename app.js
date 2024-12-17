@@ -57,13 +57,19 @@ const createWindow = () => {
 app.whenReady().then(() => {
 	ipcMain.handle(IpcChannels.getVersion, () => app.getVersion());
 	ipcMain.handle(IpcChannels.getPollObject, () => ({
-		logs: Logger.logs,
-		hunts: appDataFolder.huntsFolder
+		logs: Logger?.logs || [],
+		hunts: appDataFolder?.huntsFolder?.hunts || [],
 	}));
-	ipcMain.handle(IpcChannels.removeAllLogs, () => Logger.removeAllLogs());
+	ipcMain.handle(IpcChannels.removeAllLogs, () => {
+		Logger.removeAllLogs();
+	});
 	ipcMain.handle(IpcChannels.removeLog, (_, logId) => Logger.removeLog(logId));
 	ipcMain.handle(IpcChannels.addHunt, (_, hunt) => {
 		appDataFolder.huntsFolder.addHunt(hunt);
+		return hunt;
+	});
+	ipcMain.handle(IpcChannels.openHuntsFolder, () => {
+		appDataFolder.huntsFolder.open();
 	});
 
 	handleScreenshotChannels();

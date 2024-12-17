@@ -3,7 +3,7 @@ import { electronApi } from '../electron/electron-api';
 import { Counter } from './counter';
 import { PollService } from '../poll/poll.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { map, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { Method } from './hunting-method';
 import { Game } from './hunt-game';
 import { Version } from './game-version';
@@ -13,12 +13,19 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { HuntForm } from './new-hunt/new-hunt-form';
+import { debounce } from '../utils/debounce';
 
 @UntilDestroy()
 @Component({
 	selector: 'hunts',
 	template: `
-		<div class="flex flex-col">
+		<div class="flex flex-col gap-4">
+			<button
+				mat-raised-button
+				(click)="onOpenHuntsFolder()"
+				[disabled]="openFolderDebounceActive"
+			>Open Hunts Folder</button>
+
 			<button mat-raised-button (click)="onNewHunt()">New Hunt</button>
 
 			<div
@@ -43,11 +50,11 @@ import { HuntForm } from './new-hunt/new-hunt-form';
 			}
 		</div>
 	`,
-	providers: [PollService],
 	imports: [HuntFormComponent, CommonModule, MatButtonModule],
 })
 export class HuntsComponent implements OnInit {
 	hunts: Hunt[] = [];
+	openFolderDebounceActive = false;
 	isNewHuntVisible = false;
 	formGroup = new FormGroup({
 		species: new FormControl<string>('', [Validators.required]),
@@ -73,11 +80,18 @@ export class HuntsComponent implements OnInit {
 	ngOnInit(): void {
 		this.pollService.poll$().pipe(
 			untilDestroyed(this),
-			map((poll) => poll.hunts),
-			tap((hunts) => {
-				this.hunts = hunts;
+			tap((poll) => {
+				this.hunts = poll?.hunts || [];
 			})
 		).subscribe();
+	}
+
+	onOpenHuntsFolder(): void {
+		this.openFolderDebounceActive = true;
+		electronApi.openHuntsFolder();
+		debounce(() => {
+			this.openFolderDebounceActive = false;
+		}, 5000);
 	}
 
 	onNewHunt(): void {

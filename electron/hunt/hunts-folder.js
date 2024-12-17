@@ -1,6 +1,10 @@
 const fs = require('fs');
 const { AppDataFile } = require('../app-data/app-data-file');
 const { randomUUID } = require('crypto');
+const { Logger } = require('../logging/logger');
+const { spawn } = require('child_process');
+const { LogTypes } = require('../logging/log-types');
+const { isFolderOpen } = require('./is-folder-open');
 
 class HuntsFolder {
 	/* String 		   */ FOLDER_NAME = 'Hunts';
@@ -11,6 +15,21 @@ class HuntsFolder {
 		this.BASE_URL = PARENT_PATH + '\\' + this.FOLDER_NAME;
 
 		this.checkForHuntsFolder();
+	}
+
+	isOpen() {
+		return isFolderOpen(this.BASE_URL);
+	}
+
+	open() {
+		try {
+			const isHuntsFolderOpen = this.isOpen();
+			if (!isHuntsFolderOpen) {
+				spawn(`explorer "${this.BASE_URL}"`, { shell: true });
+			}
+		} catch (err) {
+			Logger.addLog(Logger.buildLog(err.message, LogTypes.error, err.stack, 'Windows Explorer Error'));
+		}
 	}
 
 	addHunt(hunt) {

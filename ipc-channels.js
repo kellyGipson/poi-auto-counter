@@ -7,5 +7,6 @@ module.exports = {
 		removeAllLogs: 'remove-all-logs',
 		removeLog: 'remove-log',
 		addHunt: 'add-hunt',
+		openHuntsFolder: 'open-hunts-folder',
 	}
 };
