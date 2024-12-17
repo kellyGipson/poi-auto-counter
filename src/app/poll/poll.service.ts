@@ -14,7 +14,7 @@ export class PollService {
 	}
 
 	startPolling(): void {
-		interval(300).pipe(
+		interval(1000).pipe(
 			untilDestroyed(this),
 			mergeMap(() => from(electronApi.getPollObject())),
 			tap((poll) => {
