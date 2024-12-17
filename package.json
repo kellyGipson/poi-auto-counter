@@ -4,7 +4,7 @@
   "main": "app.js",
   "scripts": {
     "ng": "ng",
-    "start": "concurrently \"ng serve --live-reload\" \"electron . APP_DEV=true\" --kill-others",
+    "start": "concurrently \"ng serve --live-reload\" \"nodemon --exec electron . APP_DEV=true\" --kill-others",
     "start-angular": "ng serve",
     "build": "ng build --base-href ./",
     "build-test": "npm run build && electron .",
@@ -31,6 +31,7 @@
     "@ngneat/until-destroy": "^10.0.0",
     "appdata-path": "^1.0.0",
     "concurrently": "^9.1.0",
+    "nodemon": "^3.1.9",
     "rxjs": "~7.8.0",
     "screenshot-desktop": "^1.15.0",
     "tslib": "^2.3.0",
