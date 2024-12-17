@@ -1,11 +1,22 @@
 <div
-	class="log relative font-size-4 flex flex-col"
+	class="log font-size-4 flex flex-col px-4 py-2"
 	[class.log--info]="log?.type === logType.info"
 	[class.log--warn]="log?.type === logType.warn"
 	[class.log--error]="log?.type === logType.error"
 	[class.log--debug]="log?.type === logType.debug"
 >
-	<span class="text-lg border-b">{{ log?.title || '' }}</span>
+	<div class="w-full flex justify-between">
+		<span class="text-lg">{{ log?.title || '' }}</span>
+
+		<button
+			class="top-0 right-0 hover:bg-red-900 active:bg-[#6d1a1a] w-6 rounded-full transition-all"
+			(click)="electronApi.removeLog(log?.id || '')"
+		>
+			<fa-icon [icon]="closeIcon"></fa-icon>
+		</button>
+	</div>
+
+	<div class="border-b w-full"></div>
 
 	<span>{{ log?.message || '' }}</span>
 
@@ -28,11 +39,4 @@
 			</div>
 		</div>
 	</div>
-
-	<button
-		class="absolute top-0 right-0 hover:bg-red-900 active:bg-[#6d1a1a] w-6 rounded-full transition-all"
-		(click)="electronApi.removeLog(log?.id || '')"
-	>
-		<fa-icon [icon]="closeIcon"></fa-icon>
-	</button>
 </div>
