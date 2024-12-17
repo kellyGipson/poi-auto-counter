@@ -1,12 +1,12 @@
-const { v7 } = require('uuid');
 const { Log } = require('./log');
 const { LogTypes } = require('./log-types');
+const { randomUUID } = require('crypto');
 
 class Logger {
 	static logs = [];
 
 	static buildLog(message, logType, details) {
-		return { id: v7(), message: message, type: logType, title: 'Main Process', details: details };
+		return { id: randomUUID({ }), message: message, type: logType, title: 'Main Process', details: details };
 	}
 
 	/**

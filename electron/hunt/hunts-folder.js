@@ -1,6 +1,6 @@
 const fs = require('fs');
-const { v7 } = require('uuid');
 const { AppDataFile } = require('../app-data/app-data-file');
+const { randomUUID } = require('crypto');
 
 class HuntsFolder {
 	/* String 		   */ FOLDER_NAME = 'Hunts';
@@ -14,11 +14,11 @@ class HuntsFolder {
 	}
 
 	addHunt(hunt) {
-		hunt.id = v7();
+		hunt.id = randomUUID();
 
 		if (hunt?.counters?.length > 0) {
 			hunt.counters.forEach((counter) => {
-				counter.id = v7();
+				counter.id = randomUUID();
 			});
 		}
 
