@@ -12,7 +12,9 @@ const { AppData } = require('./electron/app-data/app-data');
 
 const appDataFolder = new AppData();
 appDataFolder.checkFolders();
+
 const args = processArgv(process.argv);
+
 let mainWindow;
 
 const createWindow = () => {
@@ -61,12 +63,7 @@ app.whenReady().then(() => {
 	ipcMain.handle(IpcChannels.removeAllLogs, () => Logger.removeAllLogs());
 	ipcMain.handle(IpcChannels.removeLog, (_, logId) => Logger.removeLog(logId));
 	ipcMain.handle(IpcChannels.addHunt, (_, hunt) => {
-		if (appDataFolder?.huntsFolder?.addHunt) {
-			appDataFolder.huntsFolder.addHunt(hunt);
-			return hunt;
-		}
-
-		return null; // this is an error state... TODO, not sure how to handle yet
+		appDataFolder.huntsFolder.addHunt(hunt);
 	});
 
 	handleScreenshotChannels();
