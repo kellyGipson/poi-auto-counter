@@ -11,7 +11,11 @@ const { processArgv } = require('./electron/core/process-argv');
 const { AppData } = require('./electron/app-data/app-data');
 
 const appDataFolder = new AppData();
-appDataFolder.checkFolders();
+
+// TODO move to app data class somewhere. probably ctor
+const checkAppDataFolderTimer = setTimeout(() => {
+	appDataFolder.checkFolders();
+}, 3000);
 
 const args = processArgv(process.argv);
 
@@ -78,6 +82,7 @@ app.whenReady().then(() => {
 });
 
 app.on('window-all-closed', () => {
+	checkAppDataFolderTimer.unref();
   if (process.platform !== 'darwin') {
     app.quit();
   }

@@ -34,6 +34,9 @@ class HuntsFolder {
 
 	addHunt(hunt) {
 		hunt.id = randomUUID();
+		const utcDate = new Date().toISOString();
+		hunt.createdDate = utcDate;
+		hunt.lastModifiedDate = utcDate;
 
 		if (hunt?.counters?.length > 0) {
 			hunt.counters.forEach((counter) => {
@@ -41,7 +44,7 @@ class HuntsFolder {
 			});
 		}
 
-		const newFile = new AppDataFile(this.BASE_URL, hunt.id);
+		const newFile = new AppDataFile(this.BASE_URL, `${hunt?.species}_${hunt?.id}`);
 		newFile.write(hunt);
 		this.hunts.push(hunt);
 	}
