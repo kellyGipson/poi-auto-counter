@@ -24,16 +24,16 @@ class AppDataFile extends File {
 	}
 
 	read() {
-		this.backupContents = this.b64ToJsObj(this.readFileSync(this.url + '.bak'));
-		this.contents = this.b64ToJsObj(this.readFileSync(this.url));
+		this.backupContents = this.rawToObject(this.readFileSync(this.url + '.bak'));
+		this.contents = this.rawToObject(this.readFileSync(this.url));
 
 		return this; // returns the class instance instead of the contents themselves because the contents are both stored here anyways...
 	}
 
 	write(dataToWrite/* js object */) {
-		const b64 = this.jsObjToB64(dataToWrite);
-		this.writeFileSync(`${this.url}.bak`, b64);
-		this.writeFileSync(this.url, b64);
+		const rawData = this.objectToRaw(dataToWrite);
+		this.writeFileSync(`${this.url}.bak`, rawData);
+		this.writeFileSync(this.url, rawData);
 		this.backupContents = dataToWrite;
 		this.contents = dataToWrite;
 	}
@@ -46,14 +46,12 @@ class AppDataFile extends File {
 		fs.writeFileSync(path, contents);
 	}
 
-	jsObjToB64(jsObj) {
-		const json = JSON.stringify(jsObj);
-		return btoa(json);
+	objectToRaw(jsObj) {
+		return JSON.stringify(jsObj);
 	}
 
-	b64ToJsObj(b64) {
-		const json = atob(b64);
-		return JSON.parse(json);
+	rawToObject(raw) {
+		return JSON.parse(raw);
 	}
 }
 module.exports = { AppDataFile: AppDataFile };
