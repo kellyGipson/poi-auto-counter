@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { HuntForm } from './new-hunt/new-hunt-form';
 import { debounce } from '../utils/debounce';
+import { HuntCardComponent } from './hunt/hunt-card.component';
 
 @UntilDestroy()
 @Component({
@@ -35,9 +36,9 @@ import { debounce } from '../utils/debounce';
 				>New Hunt</button>
 
 				<div
-					class="my-8 h-0 scale-y-0 transition-all"
+					class="h-0 scale-y-0 transition-all"
 					[class.scale-y-100]="isNewHuntVisible"
-					[class.h-full]="isNewHuntVisible"
+					[class.!h-full]="isNewHuntVisible"
 					[class.translate-y-[-50%]]="!isNewHuntVisible"
 				>
 					<hunt-form [formGroup]="formGroup">
@@ -55,14 +56,14 @@ import { debounce } from '../utils/debounce';
 			<div>
 				
 				@for (hunt of hunts; track hunt.id) {
-					{{ hunt.id }}
+					<hunt-card [hunt]="hunt"></hunt-card>
 				} @empty {
 					no hunts yet
 				}
 			</div>
 		</div>
 	`,
-	imports: [HuntFormComponent, CommonModule, MatButtonModule],
+	imports: [HuntFormComponent, CommonModule, MatButtonModule, HuntCardComponent],
 })
 export class HuntsComponent implements OnInit {
 	hunts: Hunt[] = [];

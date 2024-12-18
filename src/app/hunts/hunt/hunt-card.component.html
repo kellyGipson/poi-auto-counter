@@ -1,0 +1,60 @@
+<div>
+	<mat-card class="example-card" appearance="outlined">
+		<mat-card-header>
+			<mat-card-title>
+				<span>{{ hunt.species }}</span>
+			</mat-card-title>
+		</mat-card-header>
+
+		<mat-card-content>
+			<div>
+				<span>Counters</span>
+
+				<div class="flex flex-wrap gap-3">
+				@for (counter of hunt.counters; track counter.id) {
+					<div class="flex flex-col border rounded-md w-min text-sm">
+						<div class="flex w-min relative mt-1">
+							<span class="text-base">{{ counter?.count }}</span>
+
+							<span
+								class="absolute text-xs -top-1"
+								[style.right]="'-' + ((counter?.interval || 0).toString().length + 1) + 'ch'"
+							>x{{ counter?.interval }}</span>
+						</div>
+
+						<span>{{ counter?.method }}</span>
+
+						<span>Games</span>
+
+						<div class="flex flex-wrap">
+							@for (game of counter.games; track $index) {
+								<mat-chip>
+									<div class="flex gap-1">
+										<span>{{ game?.version }} - {{ game?.location }}</span>
+										<fa-icon *ngIf="game?.found" [icon]="shinyIcon" matTooltip="Found Shiny"></fa-icon>
+										<fa-icon *ngIf="!game?.caught" [icon]="failedIcon" matTooltip="Failed Shiny"></fa-icon>
+									</div>
+								</mat-chip>
+							}
+						</div>
+					</div>
+				}
+				</div>
+			</div>
+		</mat-card-content>
+
+		<mat-card-footer class="example-card-footer">
+			<div class="flex justify-between p-4 text-xs">
+				<div>
+					<span *ngIf="hunt?.createdDate">Created: </span>
+					<span *ngIf="hunt?.createdDate">{{ prettyDate(hunt.createdDate || '') }}</span>
+				</div>
+
+				<div>
+					<span *ngIf="hunt?.createdDate">Last Modified: </span>
+					<span *ngIf="hunt?.lastModifiedDate">{{	prettyDate(hunt.lastModifiedDate || '') }}</span>
+				</div>
+			</div>
+		</mat-card-footer>
+	</mat-card>
+</div>
