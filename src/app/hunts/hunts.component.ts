@@ -19,35 +19,47 @@ import { debounce } from '../utils/debounce';
 @Component({
 	selector: 'hunts',
 	template: `
-		<div class="flex flex-col gap-4">
-			<button
-				mat-raised-button
-				(click)="onOpenHuntsFolder()"
-				[disabled]="openFolderDebounceActive"
-			>Open Hunts Folder</button>
+		<div class="gap-4 h-min">
+			<div class="flex flex-col gap-4">
+				<button
+					mat-raised-button
+					(click)="onOpenHuntsFolder()"
+					[disabled]="openFolderDebounceActive"
+					class="shrink-0"
+				>Open Hunts Folder</button>
 
-			<button mat-raised-button (click)="onNewHunt()">New Hunt</button>
+				<button
+					class="shrink-0"
+					mat-raised-button
+					(click)="onNewHunt()"
+				>New Hunt</button>
 
-			<div
-				class="my-8 scale-y-0 transition-all"
-				[class.scale-y-100]="isNewHuntVisible"
-				[class.translate-y-[-50%]]="!isNewHuntVisible"
-			>
-				<hunt-form [formGroup]="formGroup">
-					<button
-						addHuntButton
-						mat-raised-button
-						[disabled]="!formGroup.valid"
-						(click)="onAdd()"
-					>Add Hunt</button>
-				</hunt-form>
+				<div
+					class="my-8 h-0 scale-y-0 transition-all"
+					[class.scale-y-100]="isNewHuntVisible"
+					[class.h-full]="isNewHuntVisible"
+					[class.translate-y-[-50%]]="!isNewHuntVisible"
+				>
+					<hunt-form [formGroup]="formGroup">
+						<button
+							addHuntButton
+							mat-raised-button
+							class="shrink-0"
+							[disabled]="!formGroup.valid"
+							(click)="onAdd()"
+						>Add Hunt</button>
+					</hunt-form>
+				</div>
 			</div>
-		
-			@for (hunt of hunts; track hunt.id) {
-				{{ hunt.id }}
-			} @empty {
-				no hunts yet
-			}
+
+			<div>
+				
+				@for (hunt of hunts; track hunt.id) {
+					{{ hunt.id }}
+				} @empty {
+					no hunts yet
+				}
+			</div>
 		</div>
 	`,
 	imports: [HuntFormComponent, CommonModule, MatButtonModule],
