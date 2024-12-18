@@ -1,5 +1,5 @@
 const { contextBridge, ipcRenderer } = require('electron');
-const { IpcChannels } = require('./ipc-channels');
+const { IpcChannels } = require('./src/electron/core/ipc-channels');
 
 const ipcExposedProps = {};
 
