@@ -62,7 +62,7 @@ app.whenReady().then(() => {
 	ipcMain.handle(IpcChannels.getVersion, () => app.getVersion());
 	ipcMain.handle(IpcChannels.getPollObject, () => ({
 		logs: Logger?.logs || [],
-		hunts: appDataFolder?.huntsFolder?.hunts || [],
+		hunts: (appDataFolder?.huntsFolder?.hunts || []).map((appDataFile) => appDataFile?.contents || []),
 	}));
 	ipcMain.handle(IpcChannels.removeAllLogs, () => {
 		Logger.removeAllLogs();

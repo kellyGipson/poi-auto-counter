@@ -39,7 +39,7 @@ class AppDataFile extends File {
 	}
 
 	readFileSync(path) {
-		return fs.readFileSync(path, { encoding: 'base64' });
+		return fs.readFileSync(path);
 	}
 
 	writeFileSync(path, contents) {
@@ -48,7 +48,6 @@ class AppDataFile extends File {
 
 	jsObjToB64(jsObj) {
 		const json = JSON.stringify(jsObj);
-		console.log(json)
 		return btoa(json);
 	}
 

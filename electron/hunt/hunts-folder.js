@@ -52,14 +52,13 @@ class HuntsFolder {
 	checkForHuntsFolder() {
 		let huntFileNames = [];
 		try {
-			huntFileNames = fs.readdirSync(this.BASE_URL).filter((fileName) => fileName.endsWith('.json'));
+			huntFileNames = fs.readdirSync(this.BASE_URL).filter((fileName) => !fileName.includes('.bak'));
 		}
 		catch (e) {
 			fs.mkdirSync(this.BASE_URL);
 		}
 		finally {
 			this.hunts = huntFileNames.map((fileName) => new AppDataFile(this.BASE_URL, fileName).read());
-			console.log('this.hunts', this.hunts);
 		}
 	}
 }
