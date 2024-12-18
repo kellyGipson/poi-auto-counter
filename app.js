@@ -6,9 +6,9 @@ const path = require('path');
 const packageJson = require('./package.json');
 const { IpcChannels } = require('./ipc-channels');
 const { handleScreenshotChannels } = require('./screenshots');
-const { Logger } = require('./electron/logging/logger');
-const { processArgv } = require('./electron/core/process-argv');
-const { AppData } = require('./electron/app-data/app-data');
+const { Logger } = require('./src/electron/logging/logger');
+const { processArgv } = require('./src/electron/core/process-argv');
+const { AppData } = require('./src/electron/app-data/app-data');
 
 const appDataFolder = new AppData();
 

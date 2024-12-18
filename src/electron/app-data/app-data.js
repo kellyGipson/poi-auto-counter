@@ -1,6 +1,6 @@
 const fs = require('fs');
 const getAppDataPath = require('appdata-path').getAppDataPath;
-const packageJson = require('../../package.json');
+const packageJson = require('../../../package.json');
 const { Logger } = require('../logging/logger');
 const { HuntsFolder } = require('../hunt/hunts-folder');
 
