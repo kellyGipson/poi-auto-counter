@@ -26,7 +26,7 @@ const createWindow = () => {
   const DEV_TOOLS_DEFAULT_WIDTH = 446;
 
   mainWindow = new BrowserWindow({
-		width: 800 + (isDev ? DEV_TOOLS_DEFAULT_WIDTH : 0),
+		width: 900 + (isDev ? DEV_TOOLS_DEFAULT_WIDTH : 0),
     height: 800,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
