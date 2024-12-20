@@ -53,8 +53,7 @@ import { HuntCardComponent } from './hunt/hunt-card.component';
 				</div>
 			</div>
 
-			<div>
-				
+			<div class="flex flex-wrap gap-2">
 				@for (hunt of hunts; track hunt.id) {
 					<hunt-card [hunt]="hunt"></hunt-card>
 				} @empty {
