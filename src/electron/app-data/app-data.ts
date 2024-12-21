@@ -1,21 +1,21 @@
-const fs = require('fs');
+import fs from 'fs';
 const getAppDataPath = require('appdata-path').getAppDataPath;
-const packageJson = require('../../../package.json');
-const { Logger } = require('../logging/logger');
-const { HuntsFolder } = require('../hunt/hunts-folder');
+import packageJson from '../../../package.json';
+import { Logger } from '../logging/logger';
+import { HuntsFolder } from '../hunt/hunts-folder';
 
-class AppData {
+export class AppData {
 	PAC_PATH = `${getAppDataPath()}\\${packageJson.name}`;
-	huntsFolder;
+	huntsFolder: HuntsFolder;
 
 	constructor() {
 		this.checkFolders();
+		this.huntsFolder = new HuntsFolder(this.PAC_PATH);
 	}
 
 	checkFolders() {
 		this.checkForAppDataFolder();
 		this.checkForApplicationFolder();
-		this.huntsFolder = new HuntsFolder(this.PAC_PATH);
 	}
 
 	checkForApplicationFolder() {
@@ -29,9 +29,8 @@ class AppData {
 	checkForAppDataFolder() {
 		try {
 			fs.readdirSync(getAppDataPath());
-		} catch (e) {
-			Logger.error('AppData folder is missing. Hunts stored locally will not be accessible.', e.stack);
+		} catch (error: any) {
+			Logger.error('AppData folder is missing. Hunts stored locally will not be accessible.', error.stack);
 		}
 	}
 }
-module.exports = { AppData };

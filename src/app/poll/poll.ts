@@ -1,4 +1,4 @@
-import { Hunt } from "../hunts/hunt";
+import { Hunt } from "../infrastructure/auto-counter/hunt";
 import { Log } from "../logging/log";
 
 export class Poll {

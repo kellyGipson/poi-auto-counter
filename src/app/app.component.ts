@@ -12,19 +12,20 @@ import { LogTrayComponent } from './logging/log-tray.component';
 import { Poll } from './poll/poll';
 import { PollService } from './poll/poll.service';
 import { electronApi } from './electron/electron-api';
-import { Hunt } from './hunts/hunt';
+import { Hunt } from './infrastructure/auto-counter/hunt';
+import { IpcChannelMethods } from './infrastructure/electron/ipc-channels';
 
 declare global {
   interface Window {
     electronAPI: { // use import "electronApi" from "src/app/electron/electron-api"
-      getVersion: () => Promise<string>;
-      listDisplays: () => Promise<Display[]>;
-      screenshot: (options: ScreenshotOptions) => Promise<number[]>;
-      getPollObject: () => Promise<Poll>;
-      removeAllLogs: () => Promise<void>;
-      removeLog: (logId: string) => Promise<void>;
-      addHunt: (hunt: Hunt) => Promise<Hunt>;// returns the newly created hunt
-      openHuntsFolder: () => Promise<void>;
+      [IpcChannelMethods.getVersion]: () => Promise<string>;
+      [IpcChannelMethods.listDisplays]: () => Promise<Display[]>;
+      [IpcChannelMethods.screenshot]: (options: ScreenshotOptions) => Promise<number[]>;
+      [IpcChannelMethods.getPollObject]: () => Promise<Poll>;
+      [IpcChannelMethods.removeAllLogs]: () => Promise<void>;
+      [IpcChannelMethods.removeLog]: (logId: string) => Promise<void>;
+      [IpcChannelMethods.addHunt]: (hunt: Hunt) => Promise<Hunt>;
+      [IpcChannelMethods.openHuntsFolder]: () => Promise<void>;
     }
   }
 }

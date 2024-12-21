@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { ClipboardModule, Clipboard } from '@angular/cdk/clipboard';
 import { DomSanitizer } from '@angular/platform-browser';
 import { electronApi } from '../electron/electron-api';
-import { LogType } from './log-types';
+import { LogTypes } from '../infrastructure/logging/log-types';
 
 @Component({
 	selector: 'log',
@@ -31,7 +31,7 @@ export class LogComponent {
 	
 	electronApi = electronApi;
 	isExpanded = false;
-	logType = LogType;
+	logType = LogTypes;
 	sanitizedLogDetails = '';
 
 	constructor(private clipboard: Clipboard, public domSanitizer: DomSanitizer) {}

@@ -1,11 +1,9 @@
-import { LogTypes } from '../infrastructure/logging/log-types';
-
 export class Log {
 	constructor(
 		public id: string,
-		public title: string,
 		public message: string,
+		public type: string,
+		public title: string,
 		public details: string,
-		public type: LogTypes,
 	) {}
 }

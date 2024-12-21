@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/electron",
+    "target": "es6",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+		"noImplicitAny": true,
+		"resolveJsonModule": true,
+    "types": [
+			"node"
+		]
+  },
+	"include": [
+		"src/**/*.ts",
+	],
+	"exclude": [
+		"**/*.spec.ts",
+		"src/app/infrastructure/**/*.ts",
+	],
+  "files": [
+    "src/app.ts"
+  ]
+}

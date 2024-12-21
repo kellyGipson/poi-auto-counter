@@ -1,7 +1,7 @@
-const { execSync } = require('child_process');
-const { Logger } = require('../logging/logger');
+import { execSync } from 'child_process';
+import { Logger } from '../logging/logger';
 
-const isFolderOpen = (folderPath) => {
+export const isFolderOpen = (folderPath: string) => {
 	const powershellCommand = `powershell -Command "Get-Process | Where-Object { $_.MainWindowTitle -match '${folderPath.replace(/\\/g, '\\\\')}' }"`;
 
 	let folderOpen = true;
@@ -9,10 +9,9 @@ const isFolderOpen = (folderPath) => {
 		const cmdOutput = execSync(powershellCommand, { stdio: 'pipe', encoding: 'utf-8' });
 
 		folderOpen = !!cmdOutput.trim();
-	} catch (error) {
+	} catch (error: any) {
 		Logger.error('Error while checking if folder already open', error?.stack);
 	}
 
 	return folderOpen;
 }
-module.exports = { isFolderOpen };

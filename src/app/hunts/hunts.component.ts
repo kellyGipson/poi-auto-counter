@@ -7,7 +7,7 @@ import { tap } from 'rxjs';
 import { Method } from './hunting-method';
 import { Game } from './hunt-game';
 import { Version } from './game-version';
-import { Hunt } from './hunt';
+import { Hunt } from '../infrastructure/auto-counter/hunt';
 import { HuntFormComponent } from './new-hunt/new-hunt-form.component';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
