@@ -14,7 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { HuntForm } from './new-hunt/new-hunt-form';
 import { debounce } from '../utils/debounce';
-import { HuntCardComponent } from './hunt/hunt-card.component';
+import { HuntCardComponent } from './hunt/card/card.component';
 
 @UntilDestroy()
 @Component({
@@ -57,7 +57,7 @@ import { HuntCardComponent } from './hunt/hunt-card.component';
 				@for (hunt of hunts; track hunt.id) {
 					<hunt-card [hunt]="hunt"></hunt-card>
 				} @empty {
-					no hunts yet
+					No hunts available
 				}
 			</div>
 		</div>

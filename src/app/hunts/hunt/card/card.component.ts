@@ -6,11 +6,11 @@ import { CommonModule } from '@angular/common';
 import { faHeartCrack, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatButtonModule } from '@angular/material/button';
-import { Hunt } from '../../infrastructure/auto-counter/hunt';
+import { Hunt } from '../../../infrastructure/auto-counter/hunt';
 
 @Component({
 	selector: 'hunt-card',
-	templateUrl: './hunt-card.component.html',
+	templateUrl: './card.component.html',
 	styles: `
 		span {
 			text-wrap: nowrap;
