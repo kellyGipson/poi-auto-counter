@@ -48,7 +48,6 @@ const createWindow = () => {
   });
 
 	mainWindow.webContents.on('did-start-loading', () => {
-		appDataFolder.checkFolders();
 	});
 }
 
