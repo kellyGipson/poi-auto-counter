@@ -12,17 +12,12 @@ import { AppData } from './electron/app-data/app-data';
 
 const appDataFolder = new AppData();
 
-// TODO move to app data class somewhere. probably ctor
-const checkAppDataFolderTimer = setTimeout(() => {
-	appDataFolder.checkFolders();
-}, 3000);
-
 const args = processArgv(process.argv);
 
 let mainWindow: BrowserWindow;
 
 const createWindow = () => {
-  const isDev = (args?.APP_DEV || '') == 'true';
+  const isDev = args?.APP_DEV == 'true';
   const DEV_TOOLS_DEFAULT_WIDTH = 446;
 
   mainWindow = new BrowserWindow({
@@ -81,7 +76,6 @@ app.whenReady().then(() => {
 });
 
 app.on('window-all-closed', () => {
-	checkAppDataFolderTimer.unref();
   if (process.platform !== 'darwin') {
     app.quit();
   }
