@@ -3,6 +3,7 @@ import { CounterComponent } from './counter/counter.component';
 import { HomeComponent } from './home/home.component';
 import { AutoCounterComponent } from './auto-counter/auto-counter.component';
 import { HuntsComponent } from './hunts/hunts.component';
+import { HuntComponent } from './hunts/hunt/hunt.component';
 
 export const routes: Routes = [
 	{
@@ -20,6 +21,9 @@ export const routes: Routes = [
 	{
 		path: 'hunts',
 		component: HuntsComponent,
+		children: [
+			{ path: 'hunts/:id', component: HuntComponent },
+		]
 	},
 	{
 		path: '**',
