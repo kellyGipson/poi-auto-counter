@@ -9,7 +9,7 @@
     "start-angular": "ng serve",
     "build-angular": "ng build --base-href ./",
     "build-both": "concurrently \"npm run build-angular\" \"npm run build-electron\"",
-		"package-win64": "npx @electron/packager . --platform=win32 --arch=x64 --overwrite",
+		"package-win64": "npx @electron/packager . --platform=win32 --arch=x64 --overwrite && (if exist \"poi-auto-counter-win32-x64/resources/app/src\" rmdir /s /q \"poi-auto-counter-win32-x64/resources/app/src\")",
     "build-package-win64": "npm run clean-up && npm run build-both && npm run package-win64 && npm run clean-up",
 		"clean-up": "(if exist dist rmdir /s /q dist)"
   },
