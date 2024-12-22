@@ -6,7 +6,7 @@
 					<span>{{ hunt.species }}</span>
 				</mat-card-title>
 
-				<button mat-raised-button>Hunt</button>
+				<button mat-raised-button (click)="onHunt(hunt)">Hunt</button>
 			</div>
 		</mat-card-header>
 
@@ -43,7 +43,7 @@
 		</mat-card-content>
 
 		<mat-card-footer class="example-card-footer">
-			<div class="flex gap-4 justify-between p-4 text-xs">
+			<div class="flex gap-4 justify-between p-4 text-xs text-neutral-700">
 				<div>
 					<span *ngIf="hunt?.createdDate">Created: </span>
 					<span *ngIf="hunt?.createdDate">{{ prettyDate(hunt.createdDate || '') }}</span>

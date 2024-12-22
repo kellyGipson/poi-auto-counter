@@ -7,6 +7,7 @@ import { faHeartCrack, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatButtonModule } from '@angular/material/button';
 import { Hunt } from '../../../infrastructure/auto-counter/hunt';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'hunt-card',
@@ -31,8 +32,14 @@ export class HuntCardComponent {
 	shinyIcon = faStar;
 	failedIcon = faHeartCrack;
 
+	constructor(private router: Router) {}
+
 	prettyDate(utcDate: string) {
 		const date = new Date(utcDate);
 		return `${date.getMonth()}/${date.getDay() < 10 ? '0' : ''}${date.getDay()}/${date.getFullYear()}`;
+	}
+
+	onHunt(hunt: Hunt): void {
+		this.router.navigateByUrl(`hunts/${hunt?.id}`);
 	}
 }
