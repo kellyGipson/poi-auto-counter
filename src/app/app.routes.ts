@@ -6,27 +6,10 @@ import { HuntsComponent } from './hunts/hunts.component';
 import { HuntComponent } from './hunts/hunt/hunt.component';
 
 export const routes: Routes = [
-	{
-		path: 'home',
-		component: HomeComponent,
-	},
-	{
-		path: 'counter',
-		component: CounterComponent,
-	},
-	{
-		path: 'auto-counter',
-		component: AutoCounterComponent,
-	},
-	{
-		path: 'hunts',
-		component: HuntsComponent,
-		children: [
-			{ path: 'hunts/:id', component: HuntComponent },
-		]
-	},
-	{
-		path: '**',
-		redirectTo: 'home'
-	},
+	{ path: 'home', component: HomeComponent },
+	{ path: 'counter', component: CounterComponent },
+	{ path: 'auto-counter', component: AutoCounterComponent },
+	{ path: 'hunts', component: HuntsComponent },
+	{ path: 'hunts/:id', component: HuntComponent },
+	{ path: '**', redirectTo: 'home' },
 ];
