@@ -4,7 +4,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import url from 'url';
 import path from 'path';
 import packageJson from '../package.json';
-import { IpcChannels } from './app/infrastructure/electron/ipc-channels';
+import { IpcChannels } from './electron/core/ipc-channels';
 import { handleScreenshotChannels } from './electron/core/screenshots';
 import { Logger } from './electron/logging/logger';
 import { processArgv } from './electron/core/process-argv';

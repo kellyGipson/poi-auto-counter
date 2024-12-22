@@ -1,6 +1,6 @@
 import { ipcMain } from 'electron';
 import screenshot from 'screenshot-desktop';
-import { IpcChannels } from '../../app/infrastructure/electron/ipc-channels';
+import { IpcChannels } from './ipc-channels';
 
 export const handleScreenshotChannels = () => {
 	ipcMain.handle(IpcChannels.listDisplays, () => screenshot.listDisplays());
