@@ -3,12 +3,12 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import url from 'url';
 import path from 'path';
-import packageJson from '../package.json';
-import { IpcChannels } from './electron/core/ipc-channels';
-import { handleScreenshotChannels } from './electron/core/screenshots';
-import { Logger } from './electron/logging/logger';
-import { processArgv } from './electron/core/process-argv';
-import { AppData } from './electron/app-data/app-data';
+import packageJson from './package.json';
+import { IpcChannels } from './src/electron/core/ipc-channels';
+import { handleScreenshotChannels } from './src/electron/core/screenshots';
+import { Logger } from './src/electron/logging/logger';
+import { processArgv } from './src/electron/core/process-argv';
+import { AppData } from './src/electron/app-data/app-data';
 
 const appDataFolder = new AppData();
 
@@ -24,7 +24,7 @@ const createWindow = () => {
 		width: 900 + (isDev ? DEV_TOOLS_DEFAULT_WIDTH : 0),
     height: 800,
     webPreferences: {
-      preload: path.join(__dirname, 'electron', 'core', 'preload.js'),
+      preload: path.join(__dirname, 'src', 'electron', 'core', 'preload.js'),
       nodeIntegration: true,
     },
   });
@@ -36,7 +36,7 @@ const createWindow = () => {
     mainWindow.setMenu(null);
     mainWindow.loadURL(
       url.format({
-        pathname: path.join(__dirname, `/dist/${packageJson.name}/browser/index.html`),
+        pathname: path.join(__dirname, `/${packageJson.name}/browser/index.html`),
         protocol: 'file:',
         slashes: true,
       })

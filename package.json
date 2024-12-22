@@ -1,18 +1,17 @@
 {
   "name": "poi-auto-counter",
   "version": "0.0.0",
-  "main": "dist/electron/src/app.js",
+  "main": "dist/app.js",
   "scripts": {
-    "ng": "ng",
 		"start": "concurrently --kill-others \"ng serve --live-reload\" \"nodemon --exec npm run start-electron-dev --watch \"src/electron\" --watch \"src/app.ts\"\"",
-    "start-electron-dev": "npm run build-electron && electron . APP_DEV=true",
+    "start-electron-dev": "npm run clean-up && npm run build-electron && electron . APP_DEV=true && npm run clean-up",
+    "build-electron": "npx tsc --project tsconfig-electron.json",
     "start-angular": "ng serve",
     "build-angular": "ng build --base-href ./",
-    "build-electron": "(if exist dist rmdir /s /q dist) && npx tsc --project tsconfig-electron.json",
-    "build-test": "npm run build-angular && electron .",
-    "package-win64": "npm run build-angular && npx @electron/packager . --platform=win32 --arch=x64 --overwrite --ignore=src/app",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "build-both": "concurrently \"npm run build-angular\" \"npm run build-electron\"",
+		"package-win64": "npx @electron/packager . --platform=win32 --arch=x64 --overwrite",
+    "build-package-win64": "npm run clean-up && npm run build-both && npm run package-win64 && npm run clean-up",
+		"clean-up": "(if exist dist rmdir /s /q dist)"
   },
   "private": true,
   "dependencies": {

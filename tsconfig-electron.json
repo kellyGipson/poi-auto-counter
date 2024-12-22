@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/electron",
+    "outDir": "./dist",
     "target": "es6",
     "module": "commonjs",
     "strict": true,
@@ -20,6 +20,6 @@
 		"src/app/infrastructure/**/*.ts",
 	],
   "files": [
-    "src/app.ts"
+    "app.ts"
   ]
 }
