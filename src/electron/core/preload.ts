@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { IpcChannels } from '../../app/infrastructure/electron/ipc-channels';
+import { IpcChannels } from '../core/ipc-channels';
 
 const ipcExposedProps: any = {};
 

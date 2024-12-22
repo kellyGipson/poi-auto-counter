@@ -13,7 +13,7 @@ import { Poll } from './poll/poll';
 import { PollService } from './poll/poll.service';
 import { electronApi } from './electron/electron-api';
 import { Hunt } from './infrastructure/auto-counter/hunt';
-import { IpcChannelMethods } from './infrastructure/electron/ipc-channels';
+import { IpcChannelMethods } from './electron/ipc-channel-methods';
 
 declare global {
   interface Window {

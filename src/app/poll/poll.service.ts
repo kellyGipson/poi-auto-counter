@@ -6,6 +6,7 @@ import { Poll } from "./poll";
 
 @UntilDestroy()
 @Injectable({ providedIn: 'root' })
+// SINGLETON DO NOT IMPORT
 export class PollService {
 	pollSubject = new BehaviorSubject<Poll | null>(null);
 

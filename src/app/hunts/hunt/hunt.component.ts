@@ -1,24 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { map, Observable } from 'rxjs';
+import { UntilDestroy } from '@ngneat/until-destroy';
+import { Observable } from 'rxjs';
+import { Hunt } from '../../infrastructure/auto-counter/hunt';
+import { HuntService } from './hunt.service';
 
 @UntilDestroy()
 @Component({
 	selector: 'hunt',
 	template: `
-		{{ huntId$ | async }}
+		{{ (hunt$ | async)?.id }}
 	`,
-	imports: [CommonModule]
+	imports: [CommonModule],
+	providers: [HuntService],
 })
 export class HuntComponent {
-	huntId$: Observable<string | null>;
+	hunt$: Observable<Hunt | undefined>;
 
-	constructor(private route: ActivatedRoute) {
-		this.huntId$ = this.route.paramMap.pipe(
-			untilDestroyed(this),
-			map((map) => map.get('id')),
-		);
+	constructor(huntService: HuntService) {
+		this.hunt$ = huntService.huntByRouteParams$();
 	}
 }

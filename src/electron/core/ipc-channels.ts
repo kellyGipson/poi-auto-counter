@@ -8,13 +8,3 @@ export enum IpcChannels {
 	addHunt = 'add-hunt',
 	openHuntsFolder = 'open-hunts-folder',
 }
-export enum IpcChannelMethods {
-	getVersion = 'getVersion',
-	listDisplays = 'listDisplays',
-	screenshot = 'screenshot',
-	getPollObject = 'getPollObject',
-	removeAllLogs = 'removeAllLogs',
-	removeLog = 'removeLog',
-	addHunt = 'addHunt',
-	openHuntsFolder = 'openHuntsFolder',
-}

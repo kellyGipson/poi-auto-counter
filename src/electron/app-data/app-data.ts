@@ -15,6 +15,7 @@ export class AppData {
 		const appDataCheckInterval = 30000;
 		setInterval(() => {// I didn't clean up here because there will only ever be one of this interval... node.js will clean it up
 			this.checkFolders();
+			this.huntsFolder = new HuntsFolder(this.PAC_PATH);
 		}, appDataCheckInterval);
 	}
 

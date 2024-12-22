@@ -10,6 +10,6 @@ export const routes: Routes = [
 	{ path: 'counter', component: CounterComponent },
 	{ path: 'auto-counter', component: AutoCounterComponent },
 	{ path: 'hunts', component: HuntsComponent },
-	{ path: 'hunts/:id', component: HuntComponent },
+	{ path: 'hunts/:id', component: HuntComponent, pathMatch: 'full' },
 	{ path: '**', redirectTo: 'home' },
 ];
