@@ -9,8 +9,10 @@
 	</div>
 
 	<div class="relative shrink-0 w-screen px-14 py-4">
-		<div class="mb-4 pb-2 border-b border-neutral-500">
+		<div class="mb-4 pb-2 border-b border-neutral-500 flex justify-between">
 			<span class="text-3xl font-bold">{{ routeTitle$ | async }}</span>
+
+			<page-actions></page-actions>
 		</div>
 
 		<router-outlet/>

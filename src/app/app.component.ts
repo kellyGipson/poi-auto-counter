@@ -15,6 +15,7 @@ import { electronApi } from './electron/electron-api';
 import { Hunt } from './infrastructure/auto-counter/hunt';
 import { IpcChannelMethods } from './electron/ipc-channel-methods';
 import { filter, map, Observable } from 'rxjs';
+import { PageActionsComponent } from './infrastructure/page/page-actions.component';
 
 declare global {
   interface Window {
@@ -42,6 +43,7 @@ declare global {
 		ToolbarComponent,
 		ToolbarTriggerComponent,
 		LogTrayComponent,
+		PageActionsComponent,
 	],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
