@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { EventType, Router, RouterOutlet } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
 import { Display, ScreenshotOptions } from './screenshot-desktop-types';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -14,6 +14,7 @@ import { PollService } from './poll/poll.service';
 import { electronApi } from './electron/electron-api';
 import { Hunt } from './infrastructure/auto-counter/hunt';
 import { IpcChannelMethods } from './electron/ipc-channel-methods';
+import { filter, map, Observable } from 'rxjs';
 
 declare global {
   interface Window {
@@ -46,13 +47,18 @@ declare global {
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'poi-auto-counter';
+  routeTitle$: Observable<string>;
 	versionPromise = electronApi.getVersion();
 
 	constructor(
 		public toolbarService: ToolbarService,
 		pollService: PollService,
+		router: Router,
 	) {
 		pollService.startPolling();
+		this.routeTitle$ = router.events.pipe(
+			filter((event) => event.type === EventType.RoutesRecognized),
+			map((event) => event.state.root.firstChild?.data?.['title'] || ''),
+		);
 	}
 }

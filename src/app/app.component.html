@@ -7,10 +7,14 @@
 	<div class="shrink-0 w-[300px]">
 		<toolbar></toolbar>
 	</div>
-	
+
 	<div class="relative shrink-0 w-screen px-14 py-4">
+		<div class="mb-4 pb-2 border-b border-neutral-500">
+			<span class="text-3xl font-bold">{{ routeTitle$ | async }}</span>
+		</div>
+
 		<router-outlet/>
-	
+
 		<toolbar-trigger class="absolute top-0 left-0 m-2"></toolbar-trigger>
 	</div>
 </div>

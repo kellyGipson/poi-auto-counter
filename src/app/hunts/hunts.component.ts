@@ -4,20 +4,20 @@ import { PollService } from '../poll/poll.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { tap } from 'rxjs';
 import { Hunt } from '../infrastructure/auto-counter/hunt';
-import { AddHuntFormComponent } from './add/add-form.component';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { debounce } from '../utils/debounce';
 import { HuntCardComponent } from './hunt/card/card.component';
+import { Router } from '@angular/router';
+import { addHuntConfig } from './hunts-configs';
+import { PageActionsDirective } from '../infrastructure/page/page-actions.directive';
 
 @UntilDestroy()
 @Component({
 	selector: 'hunts',
 	template: `
 		<div class="flex flex-col gap-4">
-			<div class="flex gap-4">
-				<span class="text-3xl font-bold">Hunts</span>
-
+			<div class="flex gap-4" page-actions>
 				<button
 					mat-raised-button
 					(click)="onOpenHuntsFolder()"
@@ -29,7 +29,7 @@ import { HuntCardComponent } from './hunt/card/card.component';
 					class="shrink-0"
 					mat-raised-button
 					(click)="onNewHunt()"
-				>New Hunt</button>
+				>{{ addHuntTitle }}</button>
 			</div>
 
 			<div class="flex flex-wrap gap-2">
@@ -41,13 +41,17 @@ import { HuntCardComponent } from './hunt/card/card.component';
 			</div>
 		</div>
 	`,
-	imports: [AddHuntFormComponent, CommonModule, MatButtonModule, HuntCardComponent],
+	imports: [CommonModule, MatButtonModule, HuntCardComponent, PageActionsDirective],
 })
 export class HuntsComponent implements OnInit {
 	hunts: Hunt[] = [];
+	addHuntTitle = addHuntConfig().route.data.title;
 	openFolderDebounceActive = false;
 
-	constructor(private pollService: PollService) {}
+	constructor(
+		private pollService: PollService,
+		private router: Router,
+	) {}
 	
 	ngOnInit(): void {
 		this.pollService.poll$().pipe(
@@ -67,6 +71,6 @@ export class HuntsComponent implements OnInit {
 	}
 
 	onNewHunt(): void {
-		// navigate to add route
+		this.router.navigate([ 'hunts', 'add' ]);
 	}
 }
