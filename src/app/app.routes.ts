@@ -11,5 +11,7 @@ export const routes: Routes = [
 	{ path: 'auto-counter', component: AutoCounterComponent },
 	{ path: 'hunts', component: HuntsComponent },
 	{ path: 'hunts/:id', component: HuntComponent, pathMatch: 'full' },
+	{ path: 'hunts/add', component: HuntComponent, pathMatch: 'full' },
+	{ path: 'hunts/:id/edit', component: HuntComponent, pathMatch: 'full' },
 	{ path: '**', redirectTo: 'home' },
 ];

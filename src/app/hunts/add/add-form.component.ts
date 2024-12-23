@@ -3,10 +3,10 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { CounterFormComponent } from "../counter-form.component";
-import { HuntForm } from "./new-hunt-form";
+import { HuntForm } from "./hunt-form";
 
 @Component({
-	selector: 'hunt-form',
+	selector: 'add-hunt-form',
 	template: `
 		<div class="flex flex-col w-full bg-neutral-800 rounded-lg shadow-xl p-8">
 			<mat-form-field [appearance]="'fill'">
@@ -30,6 +30,6 @@ import { HuntForm } from "./new-hunt-form";
 		CounterFormComponent,
 	]
 })
-export class HuntFormComponent {
+export class AddHuntFormComponent {
 	@Input() formGroup!: HuntForm;
 }

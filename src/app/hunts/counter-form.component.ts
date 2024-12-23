@@ -3,9 +3,8 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
-import { CounterForm } from "./new-hunt/new-hunt-form";
+import { CounterForm } from "./add/hunt-form";
 import { CommonModule } from "@angular/common";
-import { MatButtonModule } from "@angular/material/button";
 
 @Component({
 	selector: 'counter-form',
