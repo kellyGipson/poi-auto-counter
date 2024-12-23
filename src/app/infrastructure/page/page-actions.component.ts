@@ -15,8 +15,7 @@ export class PageActionsComponent {
 		pageActionsService.elementRef$().pipe(
 			untilDestroyed(this),
 			tap((elementRef) => {
-				this.pageActionsContainerRef.clear();
-
+				this.pageActionsContainerRef.element.nativeElement.innerHTML = '';
 				this.pageActionsContainerRef.element.nativeElement.appendChild(elementRef.nativeElement);
 			}),
 		).subscribe();
