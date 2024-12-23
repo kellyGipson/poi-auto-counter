@@ -10,7 +10,7 @@ import { HuntForm } from "./hunt-form";
 	template: `
 		<div class="flex flex-col w-full bg-neutral-800 rounded-lg shadow-xl p-8">
 			<mat-form-field [appearance]="'fill'">
-			<mat-label>Pokemon Species</mat-label>
+				<mat-label>Pokemon Species</mat-label>
 				<input matInput type="text" [formControl]="formGroup.controls.species">
 			</mat-form-field>
 

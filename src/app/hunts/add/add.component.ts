@@ -12,7 +12,7 @@ import { Version } from '../game-version';
 @Component({
 	selector: 'add-hunt',
 	template: `
-		<add-form>
+		<add-hunt-form [formGroup]="formGroup">
 			<button
 				addHuntButton
 				mat-raised-button
@@ -20,7 +20,7 @@ import { Version } from '../game-version';
 				[disabled]="!formGroup.valid"
 				(click)="onAdd()"
 			>Add Hunt</button>
-		</add-form>
+		</add-hunt-form>
 	`,
 	imports: [AddHuntFormComponent],
 })
