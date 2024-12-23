@@ -1,23 +1,18 @@
 <log-tray class="absolute bottom-0 left-0 z-[9999]"></log-tray>
 
-<div
-	class="flex flex-row translate-x-[-300px] transition-all duration-300"
-	[class.!translate-x-[0px]]="toolbarService.isToolbarOpen()"
->
-	<div class="shrink-0 w-[300px]">
-		<toolbar></toolbar>
-	</div>
-
-	<div class="relative shrink-0 w-screen px-14 py-4">
+<div class="flex flex-row">
+	<div class="relative shrink-0 w-screen px-24 py-12">
 		<div class="mb-4 pb-2 border-b border-neutral-500 flex justify-between">
-			<span class="text-3xl font-bold">{{ routeTitle$ | async }}</span>
+			<div class="flex gap-4 text-3xl">
+				<a routerLink="/hunts"><span>PoiAutoCounter</span></a>
+				<fa-icon [style.font-size]="'unset'" [icon]="routeDelimiterIcon" size="2xs"></fa-icon>
+				<span>{{ routeTitle$ | async }}</span>
+			</div>
 
 			<page-actions></page-actions>
 		</div>
 
 		<router-outlet/>
-
-		<toolbar-trigger class="absolute top-0 left-0 m-2"></toolbar-trigger>
 	</div>
 </div>
 

@@ -1,13 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { EventType, Router, RouterOutlet } from '@angular/router';
+import { EventType, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
 import { Display, ScreenshotOptions } from './screenshot-desktop-types';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PacHelpComponent } from './infrastructure/help/help.component';
-import { ToolbarTriggerComponent } from './infrastructure/toolbar/toolbar-trigger.component';
-import { ToolbarService } from './infrastructure/toolbar/toolbar.service';
-import { ToolbarComponent } from './infrastructure/toolbar/toolbar.component';
 import { LogTrayComponent } from './logging/log-tray.component';
 import { Poll } from './poll/poll';
 import { PollService } from './poll/poll.service';
@@ -16,6 +13,8 @@ import { Hunt } from './infrastructure/auto-counter/hunt';
 import { IpcChannelMethods } from './electron/ipc-channel-methods';
 import { filter, map, Observable } from 'rxjs';
 import { PageActionsComponent } from './infrastructure/page/page-actions.component';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 declare global {
   interface Window {
@@ -40,10 +39,10 @@ declare global {
 		MatSelectModule,
 		ReactiveFormsModule,
 		PacHelpComponent,
-		ToolbarComponent,
-		ToolbarTriggerComponent,
 		LogTrayComponent,
 		PageActionsComponent,
+		FontAwesomeModule,
+		RouterLink,
 	],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -51,9 +50,9 @@ declare global {
 export class AppComponent {
   routeTitle$: Observable<string>;
 	versionPromise = electronApi.getVersion();
+	routeDelimiterIcon = faChevronRight;
 
 	constructor(
-		public toolbarService: ToolbarService,
 		pollService: PollService,
 		router: Router,
 	) {
