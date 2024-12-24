@@ -1,5 +1,6 @@
 import { PageConfig } from "../infrastructure/page/page-config";
 import { AddHuntComponent } from "./add/add.component";
+import { EditHuntComponent } from "./edit/edit.component";
 import { HuntsComponent } from "./hunts.component";
 
 export const huntsConfig: () => PageConfig = () => ({
@@ -18,6 +19,14 @@ export const addHuntConfig: () => PageConfig = () => ({
 		data: {
 			title: 'Add Hunt',
 		},
+		pathMatch: 'full',
+	},
+});
+export const editHuntConfig: () => PageConfig = () => ({
+	route: {
+		path: 'hunts/:id/edit',
+		component: EditHuntComponent,
+		data: { title: 'Edit Hunt' },
 		pathMatch: 'full',
 	},
 });

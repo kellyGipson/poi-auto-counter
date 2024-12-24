@@ -40,6 +40,10 @@ export class HuntCardComponent {
 	}
 
 	onHunt(hunt: Hunt): void {
-		this.router.navigateByUrl(`hunts/${hunt?.id}`);
+		this.router.navigate(['hunts', hunt?.id]);
+	}
+
+	onEdit(hunt: Hunt): void {
+		this.router.navigate(['hunts', hunt?.id, 'edit']);
 	}
 }

@@ -6,7 +6,7 @@ import { CounterFormComponent } from "../counters/counter-form.component";
 import { HuntForm } from "./hunt-form";
 
 @Component({
-	selector: 'add-hunt-form',
+	selector: 'hunt-form',
 	template: `
 		<div class="flex flex-col w-full bg-neutral-800 rounded-lg shadow-xl p-8">
 			<mat-form-field [appearance]="'fill'">
@@ -30,6 +30,6 @@ import { HuntForm } from "./hunt-form";
 		CounterFormComponent,
 	]
 })
-export class AddHuntFormComponent {
+export class HuntFormComponent {
 	@Input() formGroup!: HuntForm;
 }
