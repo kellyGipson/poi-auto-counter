@@ -6,5 +6,8 @@ export enum IpcChannelMethods {
 	removeAllLogs = 'removeAllLogs',
 	removeLog = 'removeLog',
 	addHunt = 'addHunt',
+	editHunt = 'editHunt',
+	deleteHunt = 'deleteHunt',
 	openHuntsFolder = 'openHuntsFolder',
+	reloadHuntsFolder = 'reloadHuntsFolder',
 }

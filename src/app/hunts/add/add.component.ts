@@ -10,6 +10,7 @@ import { Game } from '../hunt-game';
 import { Method } from '../hunting-method';
 import { Version } from '../game-version';
 import { addHuntConfig } from '../hunts-configs';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'add-hunt',
@@ -38,7 +39,7 @@ export class AddHuntComponent {
 			new FormGroup({
 				count: new FormControl<number>(0, [Validators.required]),
 				interval: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
-				method: new FormControl<string>('', [Validators.required]),
+				method: new FormControl<string>('Full Odds', [Validators.required]),
 				games: new FormArray([
 					new FormGroup({
 						version: new FormControl<string>('', [Validators.required]),
@@ -50,6 +51,8 @@ export class AddHuntComponent {
 			}),
 		]),
 	}) as HuntForm;
+
+	constructor(private router: Router) {}
 
 	onAdd(): void {
 		const { species, counters } = this.formGroup.value;
@@ -69,6 +72,8 @@ export class AddHuntComponent {
 				[] // todo build triggers
 			)
 		)
-		electronApi.addHunt(new Hunt(species || 'Metagross', ctrs));
+		electronApi.addHunt(new Hunt(species || 'Metagross', ctrs)).then(() => {
+			this.router.navigate(['hunts']);
+		});
 	}
 }

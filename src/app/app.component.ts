@@ -13,8 +13,10 @@ import { Hunt } from './infrastructure/auto-counter/hunt';
 import { IpcChannelMethods } from './electron/ipc-channel-methods';
 import { filter, map, Observable } from 'rxjs';
 import { PageActionsComponent } from './infrastructure/page/page-actions.component';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowsRotate, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 declare global {
   interface Window {
@@ -26,7 +28,10 @@ declare global {
       [IpcChannelMethods.removeAllLogs]: () => Promise<void>;
       [IpcChannelMethods.removeLog]: (logId: string) => Promise<void>;
       [IpcChannelMethods.addHunt]: (hunt: Hunt) => Promise<Hunt>;
+      [IpcChannelMethods.editHunt]: (hunt: Hunt) => Promise<Hunt>;
+      [IpcChannelMethods.deleteHunt]: (huntId: string) => Promise<string>;
       [IpcChannelMethods.openHuntsFolder]: () => Promise<void>;
+      [IpcChannelMethods.reloadHuntsFolder]: () => Promise<void>;
     }
   }
 }
@@ -37,6 +42,8 @@ declare global {
 		RouterOutlet,
 		CommonModule,
 		MatSelectModule,
+		MatButtonModule,
+		MatTooltipModule,
 		ReactiveFormsModule,
 		PacHelpComponent,
 		LogTrayComponent,
@@ -51,6 +58,7 @@ export class AppComponent {
   routeTitle$: Observable<string>;
 	versionPromise = electronApi.getVersion();
 	routeDelimiterIcon = faChevronRight;
+	refreshIcon = faArrowsRotate;
 
 	constructor(
 		pollService: PollService,
@@ -61,5 +69,9 @@ export class AppComponent {
 			filter((event) => event.type === EventType.RoutesRecognized),
 			map((event) => event.state.root.firstChild?.data?.['title'] || ''),
 		);
+	}
+
+	onRefreshHunts(): void {
+		electronApi.reloadHuntsFolder();
 	}
 }

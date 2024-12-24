@@ -3,10 +3,13 @@
 <div class="flex flex-row">
 	<div class="relative shrink-0 w-screen px-24 py-12">
 		<div class="mb-4 pb-2 border-b border-neutral-500 flex justify-between">
-			<div class="flex gap-4 text-3xl">
+			<div class="flex gap-4 text-3xl items-end">
 				<a routerLink="/hunts"><span>PoiAutoCounter</span></a>
 				<fa-icon [style.font-size]="'unset'" [icon]="routeDelimiterIcon" size="2xs"></fa-icon>
 				<span>{{ routeTitle$ | async }}</span>
+				<button mat-icon-button matTooltip="Refresh Hunts" (click)="onRefreshHunts()">
+					<fa-icon [style.font-size]="'unset'" [icon]="refreshIcon" size="2xs"></fa-icon>
+				</button>
 			</div>
 
 			<page-actions></page-actions>

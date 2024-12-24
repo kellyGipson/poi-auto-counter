@@ -1,10 +1,12 @@
 <div>
 	<mat-card appearance="raised">
 		<mat-card-header>
-			<div class="flex w-full justify-between">
+			<div class="flex w-full justify-between items-start">
 				<mat-card-title>
 					<span>{{ hunt.species }}</span>
 				</mat-card-title>
+
+				<delete-button (delete)="onDelete(hunt)"></delete-button>
 			</div>
 		</mat-card-header>
 
@@ -29,7 +31,7 @@
 									<div class="flex gap-1">
 										<span>{{ game?.version }} - {{ game?.location }}</span>
 										<fa-icon *ngIf="game?.found" [icon]="shinyIcon" matTooltip="Found Shiny"></fa-icon>
-										<fa-icon *ngIf="!game?.caught" [icon]="failedIcon" matTooltip="Failed Shiny"></fa-icon>
+										<fa-icon *ngIf="game?.found && !game?.caught" [icon]="failedIcon" matTooltip="Failed Shiny"></fa-icon>
 									</div>
 								</mat-chip>
 							}

@@ -65,8 +65,19 @@ app.whenReady().then(() => {
 		appDataFolder.huntsFolder.addHunt(hunt);
 		return hunt;
 	});
+	ipcMain.handle(IpcChannels.editHunt, (_, hunt) => {
+		appDataFolder.huntsFolder.editHunt(hunt);
+		return hunt;
+	});
+	ipcMain.handle(IpcChannels.deleteHunt, (_, huntId) => {
+		appDataFolder.huntsFolder.deleteHunt(huntId);
+		return huntId;
+	});
 	ipcMain.handle(IpcChannels.openHuntsFolder, () => {
 		appDataFolder.huntsFolder.open();
+	});
+	ipcMain.handle(IpcChannels.reloadHuntsFolder, () => {
+		appDataFolder.checkFolders();
 	});
 
 	handleScreenshotChannels();

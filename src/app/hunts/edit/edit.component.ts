@@ -12,6 +12,8 @@ import { Method } from '../hunting-method';
 import { Version } from '../game-version';
 import { editHuntConfig } from '../hunts-configs';
 import { Observable, take, tap } from 'rxjs';
+import { unwrap } from '../../utils/unwrap';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'edit-hunt',
@@ -55,7 +57,8 @@ export class EditHuntComponent {
 		]),
 	}) as HuntForm;
 
-	constructor(huntService: HuntService) {
+	constructor(huntService: HuntService, private router: Router) {
+		this.hunt$ = huntService.huntByRouteParams$();
 		huntService.huntByRouteParams$().pipe(
 			take(1),
 			tap((hunt) => {
@@ -78,6 +81,7 @@ export class EditHuntComponent {
 	}
 
 	onEdit(): void {
+		const hunt = unwrap(this.hunt$);
 		const { species, counters } = this.formGroup.value;
 		const ctrs = (counters || []).map((c) =>
 			new Counter(
@@ -87,7 +91,7 @@ export class EditHuntComponent {
 				(c.games || []).map((g) =>
 					new Game(
 						g.version || Version.colosseum,
-						g.location || 'Realgam Tower',
+						g.location || '<location_missing>',
 						g.caught || false,
 						g.found || false,
 					)
@@ -95,6 +99,16 @@ export class EditHuntComponent {
 				[] // todo build triggers
 			)
 		)
-		electronApi.addHunt(new Hunt(species || 'Metagross', ctrs));
+		electronApi.editHunt(
+			new Hunt(
+				species || '<species_missing>',
+				ctrs,
+				hunt?.createdDate, 
+				hunt?.lastModifiedDate,
+				hunt?.id,
+			)
+		).then(() => {
+			this.router.navigate(['hunts'])
+		});
 	}
 }

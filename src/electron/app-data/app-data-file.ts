@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { File } from '../infrastructure/file';
+import { Logger } from '../logging/logger';
 
 /**
  * Serialized, the AppDataFile UUID is the file name and
@@ -14,8 +15,11 @@ export class AppDataFile<Data> extends File<Data> {
 	get url() {
 		return this.path + '\\' + this.filename;
 	}
+	get deleteUrl() {
+		return this.deletePath + '\\' + this.filename;
+	}
 
-	constructor(public path: string, public filename: string) {
+	constructor(public path: string, public filename: string, public deletePath: string) {
 		super(path, filename);
 	}
 
@@ -32,6 +36,21 @@ export class AppDataFile<Data> extends File<Data> {
 		this.writeFileSync(this.url, rawData);
 		this.backupContents = data;
 		this.contents = data;
+	}
+
+	delete() {
+		try {
+			if (this.contents) {
+				this.writeFileSync(this.deleteUrl, this.objectToRaw(this.contents));
+				this.writeFileSync(this.deleteUrl + '.bak', this.objectToRaw(this.contents));
+				fs.rmSync(this.url);
+				fs.rmSync(this.url + '.bak');
+			} else {
+				throw new Error('File Contents Lost');
+			}
+		} catch (e: any) {
+			Logger.error(e?.message, e?.stack);
+		}
 	}
 
 	readFileSync(path: string): string {

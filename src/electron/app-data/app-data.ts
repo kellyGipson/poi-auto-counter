@@ -6,16 +6,14 @@ import { HuntsFolder } from '../hunt/hunts-folder';
 
 export class AppData {
 	PAC_PATH = `${getAppDataPath()}\\${packageJson.name}`;
-	huntsFolder: HuntsFolder;
+	huntsFolder!: HuntsFolder;
 
 	constructor() {
 		this.checkFolders();
-		this.huntsFolder = new HuntsFolder(this.PAC_PATH);
 
 		const appDataCheckInterval = 30000;
 		setInterval(() => {// I didn't clean up here because there will only ever be one of this interval... node.js will clean it up
 			this.checkFolders();
-			this.huntsFolder = new HuntsFolder(this.PAC_PATH);
 		}, appDataCheckInterval);
 	}
 
@@ -23,6 +21,7 @@ export class AppData {
 		console.log('AppData::checkFolders');
 		this.checkForAppDataFolder();
 		this.checkForApplicationFolder();
+		this.huntsFolder = new HuntsFolder(this.PAC_PATH);
 	}
 
 	checkForApplicationFolder() {

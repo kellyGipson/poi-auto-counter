@@ -54,6 +54,7 @@ export class HuntsComponent implements OnInit {
 	) {}
 	
 	ngOnInit(): void {
+		electronApi.reloadHuntsFolder();
 		this.pollService.poll$().pipe(
 			untilDestroyed(this),
 			tap((poll) => {

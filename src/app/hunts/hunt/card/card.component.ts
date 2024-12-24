@@ -8,6 +8,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatButtonModule } from '@angular/material/button';
 import { Hunt } from '../../../infrastructure/auto-counter/hunt';
 import { Router } from '@angular/router';
+import { DeleteButtonComponent } from '../../../infrastructure/delete-button/delete-button.component';
+import { electronApi } from '../../../electron/electron-api';
 
 @Component({
 	selector: 'hunt-card',
@@ -24,6 +26,7 @@ import { Router } from '@angular/router';
 		FontAwesomeModule,
 		MatTooltipModule,
 		MatButtonModule,
+		DeleteButtonComponent,
 	],
 })
 export class HuntCardComponent {
@@ -45,5 +48,11 @@ export class HuntCardComponent {
 
 	onEdit(hunt: Hunt): void {
 		this.router.navigate(['hunts', hunt?.id, 'edit']);
+	}
+
+	onDelete(hunt: Hunt): void {
+		electronApi.deleteHunt(hunt?.id || '').then(() => {
+			electronApi.reloadHuntsFolder();
+		});
 	}
 }
