@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "main": "dist/app.js",
   "scripts": {
-		"start": "concurrently \"npm run start-angular\" \"nodemon --exec npm run start-electron-dev --watch \"src/electron\" --watch \"src/app.ts\"\" --kill-others",
+		"start": "concurrently \"npm run start-angular\" \"nodemon --exec npm run start-electron-dev --watch \"src/electron\" --watch \"app.ts\"\" --kill-others",
     "start-electron-dev": "npm run clean-up && npm run build-electron && electron . APP_DEV=true && npm run clean-up",
     "build-electron": "npx tsc --project tsconfig-electron.json",
     "start-angular": "ng serve --live-reload",
