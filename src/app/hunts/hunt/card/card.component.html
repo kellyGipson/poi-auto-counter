@@ -5,8 +5,6 @@
 				<mat-card-title>
 					<span>{{ hunt.species }}</span>
 				</mat-card-title>
-
-				<button mat-raised-button (click)="onHunt(hunt)">Hunt</button>
 			</div>
 		</mat-card-header>
 
@@ -39,10 +37,15 @@
 					</div>
 				}
 				<span *ngIf="hunt.counters.length > 1">Plus {{ hunt.counters.length - 1 }} more...</span>
+
+				<div class="flex gap-2 justify-end">
+					<button mat-raised-button (click)="onHunt(hunt)">Edit</button>
+					<button mat-raised-button (click)="onHunt(hunt)">Hunt</button>
+				</div>
 			</div>
 		</mat-card-content>
 
-		<mat-card-footer class="example-card-footer">
+		<mat-card-footer>
 			<div class="flex gap-4 justify-between p-4 text-xs text-neutral-700">
 				<div>
 					<span *ngIf="hunt?.createdDate">Created: </span>

@@ -1,5 +1,6 @@
-import { Game } from "./hunt-game";
-import { Method } from "./hunting-method";
+import { Trigger } from "../../infrastructure/trigger/trigger";
+import { Game } from "../hunt-game";
+import { Method } from "../hunting-method";
 
 export class Counter {
 	constructor(
@@ -7,6 +8,7 @@ export class Counter {
 		public interval: number,
 		public method: Method | string,
 		public games: Game[],
+		public triggers: Trigger[],
 		public id?: string,
 	) {}
 }

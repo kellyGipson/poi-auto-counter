@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { AddHuntFormComponent } from './add-form.component';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { AddHuntFormComponent } from './add-form.component';
 import { HuntForm } from './hunt-form';
 import { electronApi } from '../../electron/electron-api';
 import { Hunt } from '../../infrastructure/auto-counter/hunt';
-import { Counter } from '../counter';
+import { Counter } from '../counters/counter';
 import { Game } from '../hunt-game';
 import { Method } from '../hunting-method';
 import { Version } from '../game-version';
@@ -12,17 +13,21 @@ import { Version } from '../game-version';
 @Component({
 	selector: 'add-hunt',
 	template: `
-		<add-hunt-form [formGroup]="formGroup">
-			<button
-				addHuntButton
-				mat-raised-button
-				class="shrink-0"
-				[disabled]="!formGroup.valid"
-				(click)="onAdd()"
-			>Add Hunt</button>
-		</add-hunt-form>
+		<div class="flex justify-center items-center w-full">
+			<div class="max-w-[2000px]">
+				<add-hunt-form [formGroup]="formGroup">
+					<button
+						addHuntButton
+						mat-raised-button
+						class="shrink-0"
+						[disabled]="!formGroup.valid"
+						(click)="onAdd()"
+					>Add Hunt</button>
+				</add-hunt-form>
+			</div>
+		</div>
 	`,
-	imports: [AddHuntFormComponent],
+	imports: [AddHuntFormComponent, MatButtonModule],
 })
 export class AddHuntComponent {
 	formGroup = new FormGroup({

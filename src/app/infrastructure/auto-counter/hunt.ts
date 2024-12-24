@@ -1,4 +1,4 @@
-import { Counter } from "../../hunts/counter";
+import { Counter } from "../../hunts/counters/counter";
 
 export class Hunt {
 	constructor(

@@ -2,7 +2,7 @@ import { Component, Input } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
-import { CounterFormComponent } from "../counter-form.component";
+import { CounterFormComponent } from "../counters/counter-form.component";
 import { HuntForm } from "./hunt-form";
 
 @Component({
