@@ -1,0 +1,65 @@
+<button
+	[@pokeballShake]="disabled || isActive ? '' : getCurrentAnimationState()"
+	class="flex flex-col h-full aspect-square relative rotate-0 origin-bottom"
+	(mousedown)="onMouseDown()"
+	(mouseup)="timeoutIsActive()"
+>
+	<div *ngIf="isActive" id="top-lid--opened">
+		<div
+			class="h-full w-full absolute border-2 border-black rounded-full bg-red-400"
+			[style.top]="'-40%'"
+			[class.!bg-neutral-700]="disabled"
+		></div>
+
+		<div
+			class="h-[90%] w-full absolute border-2 border-black rounded-full bg-neutral-900"
+			[style.top]="'-30%'"
+			[class.!bg-neutral-900]="disabled"
+		></div>
+
+		<div
+			class="w-[40%] top-[-40%] left-[30%] aspect-square absolute rounded-full bg-neutral-300 border-2 border-black"
+			[class.bg-neutral-600]="isActive && !disabled"
+			[class.bg-neutral-400]="disabled"
+		></div>
+
+		<div
+			class="w-[25%] top-[-34%] left-[38%] aspect-square absolute rounded-full bg-white border-2 border-black"
+			[class.bg-neutral-400]="isActive && !disabled"
+			[class.bg-neutral-400]="disabled"
+		></div>
+	</div>
+
+	<div id="bottom-lid">
+		<div
+			class="h-[50%] w-[100%] absolute border-2 border-black rounded-b-full bg-white top-[50%]"
+			[class.!bg-neutral-400]="disabled"
+		></div>
+
+		<div
+			class="h-[8%] w-[100%] absolute border-2 border-black rounded-t-full top-[45%]"
+			[class.!bg-neutral-700]="disabled"
+		></div>
+
+		<div class="w-[40%] h-[20%] top-[50%] left-[30%] aspect-square absolute rounded-b-full bg-black border-2 border-black"></div>
+	</div>
+
+	<div *ngIf="!isActive" id="top-lid--closed">
+		<div
+			class="h-[50%] w-[100%] absolute border-2 border-black rounded-t-full bg-red-400"
+			[class.!bg-neutral-700]="disabled"
+		></div>
+
+		<div
+			class="w-[40%] top-[33%] left-[30%] aspect-square absolute rounded-full bg-neutral-300 border-2 border-black"
+			[class.bg-neutral-600]="isActive && !disabled"
+			[class.bg-neutral-400]="disabled"
+		></div>
+
+		<div
+			class="w-[25%] top-[41%] left-[38%] aspect-square absolute rounded-full bg-white border-2 border-black"
+			[class.bg-neutral-400]="isActive && !disabled"
+			[class.bg-neutral-400]="disabled"
+		></div>
+	</div>
+</button>

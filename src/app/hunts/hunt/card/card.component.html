@@ -42,7 +42,9 @@
 
 				<div class="flex gap-2 justify-end">
 					<button mat-raised-button (click)="onEdit(hunt)">Edit</button>
-					<button mat-raised-button (click)="onHunt(hunt)">Hunt</button>
+
+					<button *ngIf="!isSelected" mat-raised-button (click)="onHunt(hunt)">Select</button>
+					<button *ngIf="isSelected" mat-flat-button (click)="onHunt(hunt)">Select</button>
 				</div>
 			</div>
 		</mat-card-content>

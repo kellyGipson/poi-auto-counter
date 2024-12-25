@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -10,6 +10,7 @@ import { Hunt } from '../../../infrastructure/auto-counter/hunt';
 import { Router } from '@angular/router';
 import { DeleteButtonComponent } from '../../../infrastructure/delete-button/delete-button.component';
 import { electronApi } from '../../../electron/electron-api';
+import { HuntCardSelectedEvent } from './card-selected-event';
 
 @Component({
 	selector: 'hunt-card',
@@ -32,6 +33,9 @@ import { electronApi } from '../../../electron/electron-api';
 export class HuntCardComponent {
 	@Input() hunt!: Hunt;
 
+	@Output() selected = new EventEmitter<HuntCardSelectedEvent>();
+
+	isSelected = false;
 	shinyIcon = faStar;
 	failedIcon = faHeartCrack;
 
@@ -43,7 +47,8 @@ export class HuntCardComponent {
 	}
 
 	onHunt(hunt: Hunt): void {
-		this.router.navigate(['hunts', hunt?.id]);
+		this.isSelected = !this.isSelected;
+		this.selected.emit({ hunt, isSelected: this.isSelected });
 	}
 
 	onEdit(hunt: Hunt): void {
