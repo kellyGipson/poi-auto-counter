@@ -34,7 +34,7 @@ import { PokeButtonComponent } from '../infrastructure/poke-button/poke-button.c
 				>{{ addHuntTitle }}</button>
 			</div>
 
-			<div class="flex flex-wrap gap-2">
+			<div class="flex flex-wrap justify-center gap-2">
 				@for (hunt of hunts; track hunt.id) {
 					<hunt-card [hunt]="hunt" (selected)="onHuntSelected($event)"></hunt-card>
 				} @empty {
