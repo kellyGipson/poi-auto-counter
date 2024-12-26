@@ -13,8 +13,8 @@ import { MatRippleModule } from "@angular/material/core";
 			state('neutral', style({ transform: 'rotate(0deg)'})),
 			state('shakeRight', style({ transform: 'rotate(15deg)'})),
 
-			transition('shakeLeft <=> neutral', [ animate('100ms') ]),
-			transition('neutral <=> shakeRight', [ animate('100ms') ]),
+			transition('shakeLeft <=> neutral', [ animate('25ms') ]),
+			transition('neutral <=> shakeRight', [ animate('25ms') ]),
 		])
 	]
 })
@@ -25,6 +25,13 @@ export class PokeButtonComponent {
 	direction: 'forward' | 'backward' = 'forward';
 	isActive = false;
 	isActiveFalling = false;
+	eventType = 'mouseup';
+	mouseupEventHandler = () => {
+		if (this.isActive) {
+			this.timeoutIsActive();
+		}
+		this.removeMouseupEventListener();
+	};
 
 	constructor() {
 		this.setShakeRight();
@@ -34,14 +41,16 @@ export class PokeButtonComponent {
 		return this.pokeballShakePosition;
 	}
 
+	private removeMouseupEventListener(): void {
+		document.removeEventListener(this.eventType, this.mouseupEventHandler);
+	}
+
 	onMouseDown(): void {
 		if (!this.disabled) {
 			this.isActive = true;
-			setTimeout(() => {
-				if (this.isActive) {
-					this.timeoutIsActive();
-				}
-			}, 3000);
+
+			this.removeMouseupEventListener();
+			document.addEventListener(this.eventType, this.mouseupEventHandler);
 		}
 	}
 
