@@ -23,7 +23,7 @@ const createWindow = () => {
   const DEV_TOOLS_DEFAULT_WIDTH = 446;
 
   mainWindow = new BrowserWindow({
-		width: 900 + (isDev ? DEV_TOOLS_DEFAULT_WIDTH : 0),
+		width: 1000 + (isDev ? DEV_TOOLS_DEFAULT_WIDTH : 0),
     height: 800,
     webPreferences: {
       preload: path.join(__dirname, 'src', 'electron', 'core', 'preload.js'),
@@ -82,7 +82,7 @@ app.whenReady().then(() => {
 		return huntId;
 	});
 	ipcMain.handle(IpcChannels.addTrigger, (_, huntId: string, counterId: string, trigger: Trigger) => {
-		const errorDetails = 'huntId: ' + huntId + ', counterId: ' + counterId + ', trigger: ' + trigger.toString();
+		const errorDetails = 'huntId: ' + huntId + ', counterId: ' + counterId + ', trigger: ' + new Trigger(trigger.topLeft, trigger.bottomRight, trigger.monitorId, trigger.id).toString();
 		if (!huntId) {
 			Logger.error('addTrigger::no hunt id', errorDetails);
 		}
@@ -97,8 +97,13 @@ app.whenReady().then(() => {
 			Logger.error('addTrigger::counter not found', errorDetails);
 		}
 
-		trigger.id = randomUUID();
-		counter?.triggers.push(trigger);
+		if (hunt?.contents) {
+			trigger.id = randomUUID();
+			counter?.triggers.push(trigger);
+			hunt.write(hunt.contents);
+		} else {
+			Logger.error('addTrigger::hunt contents have been lost', errorDetails);
+		}
 
 		return trigger;
 	});
