@@ -29,13 +29,13 @@ import { Trigger } from '../trigger';
 				</button>
 			</div>
 				
-			<div *ngIf="screenshot" class="relative flex-grow overflow-x-auto border">
+			<div *ngIf="screenshot" class="relative flex-grow overflow-x-auto border" [style.maxWidth]="screenshotElWidth">
 				<img id="screenshot" [src]="screenshot" class="max-h-full min-h-[550px]" [style.height]="screenshotHeight">
 
 				<div
 					class="absolute w-full max-h-full min-h-[550px] top-0 z-index-10"
 					[style.height]="screenshotHeight"
-					[style.maxWidth]="screenshotEl?.width || 'unset'"
+					[style.maxWidth]="screenshotElWidth"
 					(click)="onLeftClick($event)"
 					(contextmenu)="onRightClick($event)"
 				></div>
@@ -76,8 +76,9 @@ export class TriggerSelectorComponent {
 	rightClickCoords: Coordinate = { x: 0, y: 0 };
 	screenshotHeight = 'calc(100vh - 220px)';
 
-	get screenshotEl() {
-		return document.querySelector('#screenshot') as HTMLImageElement | null;
+	get screenshotElWidth() {
+		const screenshotElWidth = (document.querySelector('#screenshot') as HTMLImageElement | null)?.width || 0
+		return screenshotElWidth > 0 ? screenshotElWidth + 'px' : 'unset';
 	}
 
 	constructor(private domSanitizer: DomSanitizer) {}

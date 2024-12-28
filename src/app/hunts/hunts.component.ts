@@ -108,5 +108,6 @@ export class HuntsComponent implements OnInit {
 	}
 
 	onAddTrigger(): void {
+		this.router.navigate([addTriggerConfig().route.path]);
 	}
 }

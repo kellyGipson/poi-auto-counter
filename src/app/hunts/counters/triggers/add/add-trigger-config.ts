@@ -3,7 +3,7 @@ import { AddTriggerComponent } from "./add-trigger.component";
 
 export const addTriggerConfig: () => PageConfig = () => ({
 	route: {
-		path: 'hunts/:huntId/counters/:counterId/add-trigger',
+		path: 'hunts/add-trigger',
 		component: AddTriggerComponent,
 		data: {
 			title: 'Add Trigger'

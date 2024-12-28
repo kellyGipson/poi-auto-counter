@@ -7,9 +7,9 @@ import { addTriggerConfig } from './hunts/counters/triggers/add/add-trigger-conf
 export const routes: Routes = [
 	huntsConfig().route,
 	addHuntConfig().route,
-	{ path: 'hunts/:id', component: HuntComponent, data: { title: huntsConfig }, pathMatch: 'full' },
 	editHuntConfig().route,
 	addTriggerConfig().route,
 	huntCommandConfig().route,
+	{ path: 'hunts/:id', component: HuntComponent, data: { title: huntsConfig }, pathMatch: 'full' },
 	{ path: '**', redirectTo: huntsConfig().route.path },
 ];
