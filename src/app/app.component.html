@@ -1,15 +1,27 @@
 <log-tray class="absolute bottom-0 left-0 z-[9999]"></log-tray>
 
 <div class="flex flex-row">
-	<div class="relative shrink-0 w-screen px-24 py-12">
+	<div class="relative shrink-0 w-screen px-24 pt-12">
 		<div class="mb-4 pb-2 border-b border-neutral-500 flex flex-wrap justify-between gap-2">
-			<div class="flex gap-4 text-3xl items-end">
-				<a routerLink="/hunts"><span>PoiAutoCounter</span></a>
-				<fa-icon [style.font-size]="'unset'" [icon]="routeDelimiterIcon" size="2xs"></fa-icon>
-				<span>{{ routeTitle$ | async }}</span>
-				<button mat-icon-button matTooltip="Refresh Hunts" (click)="onRefreshHunts()">
-					<fa-icon [style.font-size]="'unset'" [icon]="refreshIcon" size="2xs"></fa-icon>
-				</button>
+			<div class="flex flex-wrap gap-4 text-3xl items-end">
+				<div class="flex flex-nowrap">
+					<a routerLink="/hunts"><span>PoiAutoCounter</span></a>
+
+					<button mat-icon-button [matMenuTriggerFor]="menu">
+						<fa-icon [icon]="quickMenuIcon"></fa-icon>
+					</button>
+
+					<mat-menu #menu="matMenu">
+						<button mat-menu-item [disabled]="openFolderDebounceActive" (click)="onOpenHuntsFolder()">Open Hunts Folder</button>
+
+						<button mat-menu-item (click)="onRefreshHunts()">Refresh Hunts</button>
+					</mat-menu>
+				</div>
+
+				<div class="flex gap-4 items-end text-2xl ml-4">
+					<fa-icon [icon]="routeDelimiterIcon" size="2xs"></fa-icon>
+					<span>{{ routeTitle$ | async }}</span>
+				</div>
 			</div>
 
 			<div class="flex flex-grow justify-end">

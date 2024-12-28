@@ -13,10 +13,13 @@ import { Hunt } from './infrastructure/auto-counter/hunt';
 import { IpcChannelMethods } from './electron/ipc-channel-methods';
 import { filter, map, Observable } from 'rxjs';
 import { PageActionsComponent } from './infrastructure/page/page-actions.component';
-import { faArrowsRotate, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowsRotate, faCaretDown, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Trigger } from './hunts/counters/triggers/trigger';
+import { MatMenuModule } from '@angular/material/menu';
+import { debounce } from './utils/debounce';
 
 declare global {
   interface Window {
@@ -32,6 +35,7 @@ declare global {
       [IpcChannelMethods.deleteHunt]: (huntId: string) => Promise<string>;
       [IpcChannelMethods.openHuntsFolder]: () => Promise<void>;
       [IpcChannelMethods.reloadHuntsFolder]: () => Promise<void>;
+      [IpcChannelMethods.addTrigger]: (huntId: string, counterId: string, trigger: Trigger) => Promise<Trigger>;
     }
   }
 }
@@ -44,6 +48,7 @@ declare global {
 		MatSelectModule,
 		MatButtonModule,
 		MatTooltipModule,
+		MatMenuModule,
 		ReactiveFormsModule,
 		PacHelpComponent,
 		LogTrayComponent,
@@ -59,6 +64,8 @@ export class AppComponent {
 	versionPromise = electronApi.getVersion();
 	routeDelimiterIcon = faChevronRight;
 	refreshIcon = faArrowsRotate;
+	quickMenuIcon = faCaretDown;
+	openFolderDebounceActive = false;
 
 	constructor(
 		pollService: PollService,
@@ -73,5 +80,14 @@ export class AppComponent {
 
 	onRefreshHunts(): void {
 		electronApi.reloadHuntsFolder();
+	}
+	
+	onOpenHuntsFolder(): void {
+		this.openFolderDebounceActive = true;
+		electronApi.openHuntsFolder();
+
+		debounce(() => {
+			this.openFolderDebounceActive = false;
+		}, 5000);
 	}
 }

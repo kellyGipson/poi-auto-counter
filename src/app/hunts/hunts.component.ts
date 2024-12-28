@@ -6,13 +6,16 @@ import { BehaviorSubject, map, tap } from 'rxjs';
 import { Hunt } from '../infrastructure/auto-counter/hunt';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { debounce } from '../utils/debounce';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatMenuModule } from '@angular/material/menu';
 import { HuntCardComponent } from './hunt/card/card.component';
 import { Router } from '@angular/router';
 import { addHuntConfig } from './hunts-configs';
 import { PageActionsDirective } from '../infrastructure/page/page-actions.directive';
 import { HuntCardSelectedEvent } from './hunt/card/card-selected-event';
 import { PokeButtonComponent } from '../infrastructure/poke-button/poke-button.component';
+import { unwrap } from '../utils/unwrap';
+import { addTriggerConfig } from './counters/triggers/add/add-trigger-config';
 
 @UntilDestroy()
 @Component({
@@ -22,16 +25,17 @@ import { PokeButtonComponent } from '../infrastructure/poke-button/poke-button.c
 			<div class="flex gap-4" page-actions>
 				<button
 					mat-raised-button
-					(click)="onOpenHuntsFolder()"
-					[disabled]="openFolderDebounceActive"
-					class="shrink-0"
-				>Open Hunts Folder</button>
-
-				<button
-					class="shrink-0"
-					mat-raised-button
 					(click)="onNewHunt()"
 				>{{ addHuntTitle }}</button>
+
+				<button
+					mat-raised-button
+					[matMenuTriggerFor]="menu"
+					[disabled]="!(selectedHunts$ | async)?.length"
+				>Actions</button>
+				<mat-menu #menu="matMenu">
+					<button mat-menu-item (click)="onAddTrigger()">{{ addTriggerTitle }}(s)</button>
+				</mat-menu>
 			</div>
 
 			<div class="flex flex-wrap justify-center gap-2">
@@ -47,17 +51,18 @@ import { PokeButtonComponent } from '../infrastructure/poke-button/poke-button.c
 					<div class="flex items-end">
 						<span>Go Hunt!</span>
 					</div>
-					<poke-button [disabled]="!(selectedHunts$ | async)?.length"></poke-button>
+
+					<poke-button [disabled]="!(selectedHunts$ | async)?.length" (clicked)="onPokeBallClick()"></poke-button>
 				</div>
 			</div>
 		</div>
 	`,
-	imports: [CommonModule, MatButtonModule, HuntCardComponent, PageActionsDirective, PokeButtonComponent],
+	imports: [CommonModule, MatButtonModule, MatBadgeModule, MatMenuModule, HuntCardComponent, PageActionsDirective, PokeButtonComponent],
 })
 export class HuntsComponent implements OnInit {
 	hunts: Hunt[] = [];
 	addHuntTitle = addHuntConfig().route.data.title;
-	openFolderDebounceActive = false;
+	addTriggerTitle = addTriggerConfig().route.data.title;
 
 	private _selectedHunts = new BehaviorSubject<Record<string, HuntCardSelectedEvent> | null>(null);
 	selectedHunts$ = this._selectedHunts.asObservable().pipe(
@@ -80,14 +85,6 @@ export class HuntsComponent implements OnInit {
 		).subscribe();
 	}
 
-	onOpenHuntsFolder(): void {
-		this.openFolderDebounceActive = true;
-		electronApi.openHuntsFolder();
-		debounce(() => {
-			this.openFolderDebounceActive = false;
-		}, 5000);
-	}
-
 	onNewHunt(): void {
 		this.router.navigate([ 'hunts', 'add' ]);
 	}
@@ -104,5 +101,12 @@ export class HuntsComponent implements OnInit {
 
 	onStartHunting(): void {
 		this.router.navigate(['hunts']);
+	}
+
+	onPokeBallClick(): void {
+		this.router.navigate(['hunt-command'], { state: { selectedHunts: unwrap(this.selectedHunts$) } });
+	}
+
+	onAddTrigger(): void {
 	}
 }
