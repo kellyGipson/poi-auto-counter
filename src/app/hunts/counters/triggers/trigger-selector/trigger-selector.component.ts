@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Display } from '../../../../shared/screenshot-desktop-types';
 import { MatSelectModule } from '@angular/material/select';
@@ -14,19 +14,13 @@ import { Trigger } from '../trigger';
 @Component({
 	selector: 'trigger-selector',
 	template: `
-		<div>
-			<div class="flex gap-4 items-center">
-				<mat-form-field>
-					<mat-select [formControl]="displayFormControl">
-						@for (display of displayList; track display.id; let idx = $index) {
-							<mat-option [value]="display.id">Display {{ idx + 1 }} ({{ display.width }}x{{ display.height }})</mat-option>
-						}
-					</mat-select>
-				</mat-form-field>
-
-				<button mat-raised-button (click)="onClick()">
-					<span class="text-nowrap">get screenshot</span>
-				</button>
+		<div class="flex flex-col gap-4">
+			<div class="flex gap-2">
+				@for (display of displayList; track display.id; let idx = $index) {
+					<button mat-raised-button (click)="onGetScreenshot(display.id)">
+						<span class="text-nowrap">Display {{ idx + 1 }} ({{ display.width }}x{{ display.height }})</span>
+					</button>
+				}
 			</div>
 				
 			<div *ngIf="screenshot" class="relative flex-grow overflow-x-auto border" [style.maxWidth]="screenshotElWidth">
@@ -40,23 +34,23 @@ import { Trigger } from '../trigger';
 					(contextmenu)="onRightClick($event)"
 				></div>
 			</div>
-		</div>
 
-		<div
-			*ngIf="
-				leftClickCoords.y &&
-				leftClickCoords.x &&
-				rightClickCoords.y &&
-				rightClickCoords.x
-			"
-			class="absolute border-2 border-red-400 pointer-events-none max-w-full"
-			[style]="{
-				top: lowerY() + 'px',
-				left: lowerX() + 'px',
-				bottom: 'calc(100% - ' + upperY() + 'px)',
-				right: 'calc(100% - ' + upperX() + 'px)',
-			}"
-		></div>
+			<div
+				*ngIf="
+					leftClickCoords.y &&
+					leftClickCoords.x &&
+					rightClickCoords.y &&
+					rightClickCoords.x
+				"
+				class="absolute border-2 border-red-400 pointer-events-none max-w-full"
+				[style]="{
+					top: lowerY() + 'px',
+					left: lowerX() + 'px',
+					bottom: 'calc(100% - ' + upperY() + 'px)',
+					right: 'calc(100% - ' + upperX() + 'px)',
+				}"
+			></div>
+		</div>
 	`,
 	imports: [
 		CommonModule,
@@ -70,11 +64,11 @@ export class TriggerSelectorComponent {
 	@Output() triggerSelected = new EventEmitter<TriggerSelectedEvent>();
 	
 	screenshot?: SafeResourceUrl;
-	displayFormControl = new FormControl<string>('');
 	displayList: Display[] = [];
 	leftClickCoords: Coordinate = { x: 0, y: 0 };
 	rightClickCoords: Coordinate = { x: 0, y: 0 };
 	screenshotHeight = 'calc(100vh - 220px)';
+	lastSelectedDisplayId!: string;
 
 	get screenshotElWidth() {
 		const screenshotElWidth = (document.querySelector('#screenshot') as HTMLImageElement | null)?.width || 0
@@ -93,11 +87,8 @@ export class TriggerSelectorComponent {
 		});
 
 		this.displayList = displayList;
-		if (this.displayList.length > 0) {
-			this.displayFormControl.setValue(this.displayList[0].id);
-		}
 
-		this.onClick();
+		this.onGetScreenshot(this.displayList[0].id);
 	}
 
 	lowerX(): number {
@@ -139,13 +130,10 @@ export class TriggerSelectorComponent {
 		this.emit();
 	}
 
-	onClick(): void {
-		if (this.displayFormControl.value) {
-			electronApi.screenshot({ format: 'png', screen: this.displayFormControl.value })
-				.then((buffer) => {
-					this.screenshot = this.convertBufferToImage(buffer);
-				});
-		}
+	onGetScreenshot(displayId: string): void {
+		this.lastSelectedDisplayId = displayId;
+		electronApi.screenshot({ format: 'png', screen: displayId })
+			.then((buffer) => { this.screenshot = this.convertBufferToImage(buffer); });
 	}
 
   convertBufferToImage(buffer: number[]): SafeResourceUrl {
@@ -162,7 +150,7 @@ export class TriggerSelectorComponent {
 			trigger: new Trigger(
 				this.leftClickCoords,
 				this.rightClickCoords,
-				this.displayFormControl.value || '<MONITOR_ID_LOST>'
+				this.lastSelectedDisplayId || '<MONITOR_ID_LOST>'
 			)
 		});
 	}
