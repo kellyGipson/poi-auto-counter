@@ -1,4 +1,4 @@
-import { Trigger } from "../../infrastructure/trigger/trigger";
+import { Trigger } from "./triggers/trigger";
 import { Game } from "../hunt-game";
 import { Method } from "../hunting-method";
 

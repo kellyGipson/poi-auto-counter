@@ -1,5 +1,5 @@
 <button
-	[@pokeballShake]="disabled || isActive ? '' : getCurrentAnimationState()"
+	[@pokeballShake]="disabled || isActive || isActiveFalling ? '' : getCurrentAnimationState()"
 	class="flex flex-col h-full aspect-square relative rotate-0 origin-bottom"
 	(mousedown)="onMouseDown()"
 >

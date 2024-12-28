@@ -19,6 +19,7 @@ export class Logger {
 
 	static error(message: string, details: string) {
 		Logger.addLog(Logger.buildLog(message, LogTypes.error, details));
+		throw new Error(message);
 	}
 
 	static debug(message: string, details: string) {

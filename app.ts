@@ -1,5 +1,6 @@
 'use strict';
 
+import { randomUUID } from 'crypto';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import url from 'url';
 import path from 'path';
@@ -9,6 +10,7 @@ import { handleScreenshotChannels } from './src/electron/core/screenshots';
 import { Logger } from './src/electron/logging/logger';
 import { processArgv } from './src/electron/core/process-argv';
 import { AppData } from './src/electron/app-data/app-data';
+import { Trigger } from './src/app/hunts/counters/triggers/trigger';
 
 const appDataFolder = new AppData();
 
@@ -61,6 +63,12 @@ app.whenReady().then(() => {
 		Logger.removeAllLogs();
 	});
 	ipcMain.handle(IpcChannels.removeLog, (_, logId) => Logger.removeLog(logId));
+	ipcMain.handle(IpcChannels.openHuntsFolder, () => {
+		appDataFolder.huntsFolder.open();
+	});
+	ipcMain.handle(IpcChannels.reloadHuntsFolder, () => {
+		appDataFolder.checkFolders();
+	});
 	ipcMain.handle(IpcChannels.addHunt, (_, hunt) => {
 		appDataFolder.huntsFolder.addHunt(hunt);
 		return hunt;
@@ -73,11 +81,26 @@ app.whenReady().then(() => {
 		appDataFolder.huntsFolder.deleteHunt(huntId);
 		return huntId;
 	});
-	ipcMain.handle(IpcChannels.openHuntsFolder, () => {
-		appDataFolder.huntsFolder.open();
-	});
-	ipcMain.handle(IpcChannels.reloadHuntsFolder, () => {
-		appDataFolder.checkFolders();
+	ipcMain.handle(IpcChannels.addTrigger, (_, huntId: string, counterId: string, trigger: Trigger) => {
+		const errorDetails = 'huntId: ' + huntId + ', counterId: ' + counterId + ', trigger: ' + trigger.toString();
+		if (!huntId) {
+			Logger.error('addTrigger::no hunt id', errorDetails);
+		}
+
+		const hunt = appDataFolder.huntsFolder.hunts.find(h => h.contents?.id === huntId);
+		if (!hunt) {
+			Logger.error('addTrigger::hunt not found', errorDetails);
+		}
+
+		const counter = hunt?.contents?.counters.find(c => c.id === counterId); 
+		if (!counter) {
+			Logger.error('addTrigger::counter not found', errorDetails);
+		}
+
+		trigger.id = randomUUID();
+		counter?.triggers.push(trigger);
+
+		return trigger;
 	});
 
 	handleScreenshotChannels();

@@ -13,3 +13,8 @@ html, body {
 	overflow-x: hidden;
 	overflow-y: auto;
 }
+
+img, video {
+	max-width: unset;
+	height: unset;
+}

@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { CommonModule } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { MatRippleModule } from "@angular/material/core";
 
 @Component({
@@ -20,6 +20,8 @@ import { MatRippleModule } from "@angular/material/core";
 })
 export class PokeButtonComponent {
 	@Input() disabled!: boolean;
+
+	@Output() clicked = new EventEmitter<void>();
 
 	pokeballShakePosition: 'shakeLeft' | 'neutral' | 'shakeRight' = 'neutral';
 	direction: 'forward' | 'backward' = 'forward';
@@ -60,6 +62,7 @@ export class PokeButtonComponent {
 			this.isActiveFalling = true;
 			setTimeout(() => {
 				this.isActiveFalling = false;
+				this.clicked.emit();
 			}, 1000);
 		}
 	}

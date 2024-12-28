@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { EventType, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
-import { Display, ScreenshotOptions } from './screenshot-desktop-types';
+import { Display, ScreenshotOptions } from './shared/screenshot-desktop-types';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PacHelpComponent } from './infrastructure/help/help.component';
 import { LogTrayComponent } from './logging/log-tray.component';

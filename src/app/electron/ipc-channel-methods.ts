@@ -5,9 +5,10 @@ export enum IpcChannelMethods {
 	getPollObject = 'getPollObject',
 	removeAllLogs = 'removeAllLogs',
 	removeLog = 'removeLog',
+	openHuntsFolder = 'openHuntsFolder',
+	reloadHuntsFolder = 'reloadHuntsFolder',
 	addHunt = 'addHunt',
 	editHunt = 'editHunt',
 	deleteHunt = 'deleteHunt',
-	openHuntsFolder = 'openHuntsFolder',
-	reloadHuntsFolder = 'reloadHuntsFolder',
+	addTrigger = 'addTrigger',
 }
