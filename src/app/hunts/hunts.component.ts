@@ -108,6 +108,6 @@ export class HuntsComponent implements OnInit {
 	}
 
 	onAddTrigger(): void {
-		this.router.navigate([addTriggerConfig().route.path]);
+		this.router.navigate([addTriggerConfig().route.path], { state: { selectedHunts: unwrap(this.selectedHunts$) } });
 	}
 }

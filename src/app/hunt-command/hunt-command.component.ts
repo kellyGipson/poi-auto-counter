@@ -5,6 +5,7 @@ import { HuntCardSelectedEvent } from '../hunts/hunt/card/card-selected-event';
 import { MatButtonModule } from '@angular/material/button';
 import { HuntTerminalComponent } from './hunt-terminal/hunt-terminal.component';
 import { addTriggerConfig } from '../hunts/counters/triggers/add/add-trigger-config';
+import { getSelectedHunts } from '../utils/get-selected-hunts';
 
 @Component({
 	selector: 'hunt-command',
@@ -23,7 +24,7 @@ export class HuntCommandComponent {
 	selectedHuntEvents: HuntCardSelectedEvent[];
 	addTriggerTitle = addTriggerConfig().route.data.title;
 
-	constructor(private router: Router) {
-		this.selectedHuntEvents = this.router.getCurrentNavigation()?.extras?.state?.['selectedHunts'] || [];
+	constructor(router: Router) {
+		this.selectedHuntEvents = getSelectedHunts(router);
 	}
 }
